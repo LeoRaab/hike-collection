@@ -27,7 +27,7 @@ export class AppInitService {
         this.hikeService.loadRepository();
         resolve(true);
       } catch (e) {
-        this.loggerService.error('Failed loading remote config: ' + JSON.stringify(e));
+        this.loggerService.error('Failed init: ' + JSON.stringify(e));
         //TODO: find alternative if remote config is not available --> (Standard-Konfig laden zum Beispiel)
       }
     });
