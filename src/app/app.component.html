@@ -1,3 +1,11 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <app-menu></app-menu>
+  <div class="spinner-container" *ngIf="isLoading">
+    <ion-spinner name="crescent"
+                 duration="1000"
+                 color="tertiary"
+                 class="spinner"></ion-spinner>
+  </div>
+  <ion-router-outlet id="ion-router-outlet"></ion-router-outlet>
+
 </ion-app>

@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>
+      Hikes
+    </ion-title>
+    <ion-button slot="end" fill="clear" color="success" [routerLink]="['/author']">
+      <ion-icon name="person-circle-outline" size="large"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" #ionContent [scrollEvents]="true" (ionScrollEnd)="setDistanceToTop()">
+
+  <ion-refresher slot="fixed" (ionRefresh)="loadCollection($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="10">
+        <ion-searchbar [(ngModel)]="searchTerm" debounce="700"></ion-searchbar>
+      </ion-col>
+      <ion-col size="2" class="ion-align-self-center">
+        <ion-button (click)="showFilterModal()" fill="clear" color="success">
+          <ion-icon name="filter-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <app-hike-collection
+    *ngIf="hikeCollection"
+    [hikeCollection]="hikeCollection">
+  </app-hike-collection>
+
+  <ng-container *ngIf="distanceToTop > 50">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="ionContent.scrollToTop(800)" color="success">
+        <ion-icon name="chevron-up-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ng-container>
+</ion-content>

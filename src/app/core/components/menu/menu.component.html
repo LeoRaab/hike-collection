@@ -1,0 +1,28 @@
+<ion-menu side="start" menuId="main" contentId="ion-router-outlet">
+  <ion-header>
+    <ion-toolbar color="success">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item [routerLink]="['/new']">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-label>Add hike</ion-label>
+      </ion-item>
+      <ion-item [routerLink]="['/import']">
+        <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+        <ion-label>Import hike</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="heart-outline" slot="start"></ion-icon>
+        <ion-label>Favorites</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Friends</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-img src="assets/logo.svg"></ion-img>
+  </ion-content>
+</ion-menu>

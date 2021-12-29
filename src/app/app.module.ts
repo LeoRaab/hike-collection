@@ -1,17 +1,69 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
+import {HttpClientModule} from '@angular/common/http';
+import {CommonModule} from '@angular/common';
+import {PictureModalPage} from './pages/modals/picture-modal/picture-modal.page';
+import {environment} from '../environments/environment';
+import {ScreenTrackingService, UserTrackingService} from '@angular/fire/analytics';
+import {AngularFireModule} from '@angular/fire/compat';
+import {AngularFireAnalyticsModule} from '@angular/fire/compat/analytics';
+import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
+import {AngularFireStorageModule} from '@angular/fire/compat/storage';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FilterModalPage} from './pages/modals/filter-modal/filter-modal.page';
+import {CoreModule} from './core/core.module';
+import {MenuComponent} from './core/components/menu/menu.component';
+import {AppInitService} from './core/services/app-init.service';
+;
+
+export const initApp = (appInitService: AppInitService) => async () => {
+  await appInitService.init();
+  console.log('APP INIT SUCCESS');
+  return Promise.resolve();
+};
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    PictureModalPage,
+    FilterModalPage,
+    MenuComponent
+  ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    IonicModule.forRoot(),
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG}),
+    HttpClientModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreModule
+  ],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [AppInitService], multi: true
+    },
+    ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

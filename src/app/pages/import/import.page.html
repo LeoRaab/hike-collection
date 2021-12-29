@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Import hike</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button expand="full" (click)="importHike()" *ngIf="platform.is('mobile') || platform.is('tablet')">
+    <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+    <ion-label>import</ion-label>
+  </ion-button>
+
+  <ion-button expand="full" class="width-full" *ngIf="platform.is('desktop')">
+    <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+    <label class="custom-file-upload">
+      <input type="file" [(ngModel)]="uploadedHike"/>
+      Selected hike
+    </label>
+  </ion-button>
+  {{ uploadedHike }}
+</ion-content>

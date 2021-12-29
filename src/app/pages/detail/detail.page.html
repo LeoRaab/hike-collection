@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button text="" slot="start" color="success"></ion-back-button>
+    <ion-title>Details</ion-title>
+    <ion-button slot="end" fill="clear" [routerLink]="['/edit/' + hikeId]" color="success">
+      <ion-icon name="pencil-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding-horizontal">
+
+  <app-hike-detail *ngIf="hike" [hike]="hike"></app-hike-detail>
+
+  <ion-fab (click)="shareHike()" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success">
+      <ion-icon name="share-social-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

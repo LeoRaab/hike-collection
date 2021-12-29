@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pictures</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let picture of tmpPictureCollection; let pictureId = index">
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col>
+            <img [src]="picture.storageUrl | getDownloadURL" [alt]="picture.altText"/>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col>
+              <ion-input [(ngModel)]="picture.altText"></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-button (click)="deletePicture(pictureId)" slot="end" fill="clear" color="danger">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-button (click)="savePictureCollection()" color="success" expand="full">save</ion-button>
+  </ion-list>
+</ion-content>

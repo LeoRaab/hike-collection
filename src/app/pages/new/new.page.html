@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button text="" slot="start" color="success"></ion-back-button>
+    <ion-title>
+      Add hike
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-hike-form (saveHike)="handleSaveRequest($event)"></app-hike-form>
+</ion-content>

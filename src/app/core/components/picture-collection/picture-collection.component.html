@@ -1,0 +1,5 @@
+<swiper [config]="config">
+  <ng-template swiperSlide *ngFor="let picture of pictureCollection">
+    <ion-img [src]="picture.storageUrl | getDownloadURL" [alt]="picture.altText"></ion-img>
+  </ng-template>
+</swiper>

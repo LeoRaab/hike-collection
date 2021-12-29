@@ -1,0 +1,19 @@
+<ng-container *ngIf="!hikeCollection || hikeCollection.length === 0">
+  <ion-img src="../../../assets/hiking.svg"></ion-img>
+  <ion-text>
+    <h4>No Hikes found...</h4>
+  </ion-text>
+</ng-container>
+
+<ng-container *ngIf="hikeCollection">
+  <ion-card *ngFor="let hike of hikeCollection" [routerLink]="['/detail/' + hike.hikeId]">
+    <app-picture-collection [pictureCollection]="hike.pictureCollection"></app-picture-collection>
+    <ion-card-header>
+      <ion-card-subtitle>{{ hike.hikeLocation.address.city }}</ion-card-subtitle>
+      <ion-card-title>{{ hike.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ hike.shortDescription }}
+    </ion-card-content>
+  </ion-card>
+</ng-container>

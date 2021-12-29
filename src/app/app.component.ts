@@ -1,4 +1,12 @@
+/**
+ * TODO: Funktionen kapseln
+ * TODO: CODE verbessern
+ * TODO: Loading-Spinner überall
+ */
 import { Component } from '@angular/core';
+import {HikeService} from './core/services/hike.service';
+import {UserService} from './core/services/user.service';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +14,13 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  isLoading: false;
+
+  constructor(private userService: UserService,
+              private menu: MenuController) {}
+
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
 }
