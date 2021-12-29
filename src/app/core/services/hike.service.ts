@@ -21,6 +21,9 @@ export class HikeService {
   constructor(private fireStore: AngularFirestore,
               private userService: UserService,
               private loggerService: LoggerService) {
+  }
+
+  loadRepository(): void {
     this.hikeRepository = new FireStoreRepository(this.fireStore, this.loggerService, this.userService);
   }
 

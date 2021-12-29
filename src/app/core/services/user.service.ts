@@ -23,7 +23,7 @@ export class UserService {
         this.user = user;
         resolve(true);
       }, (error) => {
-        this.loggerService.error('Loading user failed! - ' + error);
+        this.loggerService.error('Loading user failed: ' + error);
         resolve(false);
       });
     });

@@ -20,14 +20,12 @@ export class AppInitService {
   public init(): Promise<boolean> {
     this.loggerService.debug('Starting app init');
 
-    return new Promise<boolean>(resolve => {
+    return new Promise<boolean>(async (resolve) => {
       try {
-        this.configService.fetchRemoteConfig()
-          .then(() => {
-            this.loggerService.debug('Loaded remote config');
-            this.loggerService.debug('App init complete');
-            resolve(true);
-          });
+        await this.configService.fetchRemoteConfig();
+        await this.userService.loadUser();
+        this.hikeService.loadRepository();
+        resolve(true);
       } catch (e) {
         this.loggerService.error('Failed loading remote config: ' + JSON.stringify(e));
         //TODO: find alternative if remote config is not available --> (Standard-Konfig laden zum Beispiel)
