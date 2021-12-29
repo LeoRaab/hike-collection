@@ -1,21 +1,15 @@
 import Hike from '../models/hike.model';
 import {Observable} from 'rxjs';
 import Picture from '../models/picture.model';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {LoggerService} from '../services/logger.service';
 import {UserService} from '../services/user.service';
-import HikeRepositoryInterface from '../interfaces/HikeRepositoryInterface';
 import firebase from 'firebase/compat';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 
-export class FireStoreRepository implements HikeRepositoryInterface{
+export default class HikeRepository {
 
-  /**
-   * TODO: Put in config
-   */
   hikeCollectionPath: string;
-
-  hikeCollectionRef: AngularFirestoreCollection<Hike>;
 
   constructor(private fireStore: AngularFirestore,
               private loggerService: LoggerService,

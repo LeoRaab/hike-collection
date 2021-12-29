@@ -14,8 +14,8 @@ import {PictureCollectionComponent} from './components/picture-collection/pictur
 import {SwiperModule} from 'swiper/angular';
 import {FormatMeterPipe} from './pipes/format-meter.pipe';
 import {FormatDurationPipe} from './pipes/format-duration.pipe';
-import { FilterPipe } from './pipes/filter.pipe';
-import { SearchPipe } from './pipes/search.pipe';
+import {FilterPipe} from './pipes/filter.pipe';
+import {SearchPipe} from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
@@ -30,15 +30,15 @@ import { SearchPipe } from './pipes/search.pipe';
     FilterPipe,
     SearchPipe
   ],
-    imports: [
-        CommonModule,
-        IonicModule,
-        RouterModule,
-        FormsModule,
-        AngularFireStorageModule,
-        SwiperModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    CommonModule,
+    IonicModule,
+    RouterModule,
+    FormsModule,
+    AngularFireStorageModule,
+    SwiperModule,
+    ReactiveFormsModule
+  ],
   exports: [
     HikeFormComponent,
     HikeCollectionComponent,
