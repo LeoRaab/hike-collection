@@ -7,7 +7,6 @@ import {UserService} from './user.service';
 import HikeRepositoryInterface from '../interfaces/HikeRepositoryInterface';
 import {FireStoreRepository} from '../repositories/FireStoreRepository';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {LocalRepository} from '../repositories/LocalRepository';
 import firebase from 'firebase/compat';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 
@@ -16,22 +15,13 @@ import OrderByDirection = firebase.firestore.OrderByDirection;
 })
 export class HikeService {
 
-  isOnlineMode = true;
   hikeCollection: Hike[];
   hikeRepository: HikeRepositoryInterface;
 
   constructor(private fireStore: AngularFirestore,
               private userService: UserService,
               private loggerService: LoggerService) {
-  }
-
-  initHikeRepository(isOnlineMode: boolean) {
-
-    if (isOnlineMode) {
-      this.hikeRepository = new FireStoreRepository(this.fireStore, this.loggerService, this.userService);
-    } else {
-      this.hikeRepository = new LocalRepository();
-    }
+    this.hikeRepository = new FireStoreRepository(this.fireStore, this.loggerService, this.userService);
   }
 
   getHikeCollection(orderBy: string, orderDirection: OrderByDirection): Observable<Hike[]> {

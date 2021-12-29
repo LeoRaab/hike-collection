@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {LoggerService} from './logger.service';
-import {Observable} from 'rxjs';
 import firebase from 'firebase/compat';
 import User = firebase.User;
-import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/compat/firestore';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'

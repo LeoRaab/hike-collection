@@ -17,34 +17,22 @@ export class AppInitService {
               private authorService: AuthorService) {
   }
 
-  public init(): Promise<void> {
+  public init(): Promise<boolean> {
     this.loggerService.debug('Starting app init');
 
-    if (this.configService.onlineMode) {
-      return this.initOnlineMode();
-    } else {
-      this.initLocalMode();
-    }
-  }
-
-  private initOnlineMode(): Promise<void> {
-    return new Promise<void>(async (resolve) => {
+    return new Promise<boolean>(resolve => {
       try {
-        await this.configService.fetchRemoteConfig();
-        await this.userService.loadUser();
-        this.hikeService.initHikeRepository(this.configService.onlineMode);
-        this.authorService.loadAuthor();
-        this.loggerService.debug('App init complete');
-        resolve();
-      } catch (exception) {
+        this.configService.fetchRemoteConfig()
+          .then(() => {
+            this.loggerService.debug('Loaded remote config');
+            this.loggerService.debug('App init complete');
+            resolve(true);
+          });
+      } catch (e) {
+        this.loggerService.error('Failed loading remote config: ' + JSON.stringify(e));
         //TODO: find alternative if remote config is not available --> (Standard-Konfig laden zum Beispiel)
       }
     });
   }
 
-  private initLocalMode() {
-    /**
-     * TODO: Implement
-     */
-  }
 }

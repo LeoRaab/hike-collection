@@ -21,13 +21,12 @@ import {FilterModalPage} from './pages/modals/filter-modal/filter-modal.page';
 import {CoreModule} from './core/core.module';
 import {MenuComponent} from './core/components/menu/menu.component';
 import {AppInitService} from './core/services/app-init.service';
-;
 
 export const initApp = (appInitService: AppInitService) => async () => {
   await appInitService.init();
-  console.log('APP INIT SUCCESS');
   return Promise.resolve();
 };
+
 
 @NgModule({
   declarations: [

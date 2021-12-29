@@ -17,7 +17,9 @@ export class AppComponent {
   isLoading: false;
 
   constructor(private userService: UserService,
-              private menu: MenuController) {}
+              private menu: MenuController) {
+    console.log('created');
+  }
 
   openFirst() {
     this.menu.enable(true, 'first');
