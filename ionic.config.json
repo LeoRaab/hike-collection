@@ -1,0 +1,7 @@
+{
+  "name": "Hike-Collection",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
