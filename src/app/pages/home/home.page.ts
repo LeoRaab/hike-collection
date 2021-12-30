@@ -8,6 +8,7 @@ import {IonContent, ModalController} from '@ionic/angular';
 import {FilterModalPage} from '../modals/filter-modal/filter-modal.page';
 import Hike from '../../core/models/hike.model';
 import {FilterSettings} from '../../core/models/filter-settings.model';
+import {UserService} from '../../core/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -23,11 +24,13 @@ export class HomePage implements OnInit {
   filterSettings = new FilterSettings();
 
   constructor(private hikeService: HikeService,
+              private userService: UserService,
               private loggerService: LoggerService,
               private modalController: ModalController) {
   }
 
   ngOnInit() {
+
     this.loadCollection();
   }
 

@@ -2,9 +2,6 @@ import {Injectable} from '@angular/core';
 import {LoggerService} from './logger.service';
 import {ConfigService} from './config.service';
 import {UserService} from './user.service';
-import {HikeService} from './hike.service';
-import {AuthorService} from './author.service';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +10,24 @@ export class AppInitService {
 
   constructor(private configService: ConfigService,
               private loggerService: LoggerService,
-              private userService: UserService,
-              private hikeService: HikeService,
-              private authorService: AuthorService,
-              private auth: AngularFireAuth,) {
+              private userService: UserService) {
   }
 
   public init(): Promise<void> {
-    this.loggerService.debug('Starting app init');
 
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        await this.configService.fetchRemoteConfig();
-      } catch (e) {
-        this.loggerService.error('Failed loading remote config: ' + JSON.stringify(e));
-        reject();
-        //TODO: find alternative if remote config is not available --> (Standard-Konfig laden zum Beispiel)
+    return new Promise<void>(async (resolve) => {
+      this.loggerService.debug('Starting app init');
+
+      const isRemoteConfigFetched = await this.configService.fetchRemoteConfig();
+      const isUserSet = await this.userService.setUser();
+
+      if (isRemoteConfigFetched && isUserSet) {
+        this.loggerService.debug('Finished app init');
+      } else {
+        this.loggerService.info('Finished app init with errors');
       }
 
-      await this.userService.loadUser();
-
       resolve();
-
-
     });
   }
 

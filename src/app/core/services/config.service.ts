@@ -12,17 +12,19 @@ export class ConfigService {
   private hikeCollectionPath: string;
 
   constructor(private remoteConfig: AngularFireRemoteConfig,
-              private userService: UserService,
               private loggerService: LoggerService) {
   }
 
   public fetchRemoteConfig(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<boolean>((resolve) => {
       this.remoteConfig.strings.subscribe((config) => {
+        //TODO: check why we enter here twice??
         this.config = config;
+        this.loggerService.debug('Loaded remote config');
         resolve(true);
       }, (error) => {
         this.loggerService.error('Loading remote config failed! - ' + error);
+        //TODO: find alternative if remote config is not available --> (Standard-Konfig laden zum Beispiel)
         resolve(false);
       });
     });
@@ -33,7 +35,7 @@ export class ConfigService {
   }
 
   public setHikeCollectionPath(userId: string): void {
-    this.hikeCollectionPath = 'hikes/user_' + this.userService.getUserId() + '/hikeCollection/';
+    this.hikeCollectionPath = 'hikes/user_' + userId + '/hikeCollection/';
   }
 
   public getHikeCollectionPath(): string {

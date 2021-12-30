@@ -4,6 +4,7 @@ import {LoggerService} from './logger.service';
 import firebase from 'firebase/compat';
 import User = firebase.User;
 import {AngularFirestore} from '@angular/fire/compat/firestore';
+import {ConfigService} from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,19 @@ export class UserService {
 
   constructor(private fireStore: AngularFirestore,
               private auth: AngularFireAuth,
+              private configService: ConfigService,
               private loggerService: LoggerService) {
   }
 
-  loadUser(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+  setUser(): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
       this.auth.user.subscribe((user) => {
         this.user = user;
+        this.configService.setHikeCollectionPath(this.user.uid);
+        this.loggerService.debug('Setting user with id: ' + this.user.uid);
         resolve(true);
       }, (error) => {
-        this.loggerService.error('Loading user failed: ' + error);
+        this.loggerService.error('Setting user failed: ' + error);
         resolve(false);
       });
     });

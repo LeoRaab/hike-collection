@@ -17,7 +17,8 @@ export class LoginPage {
 
   async login() {
     await this.userService.loginUser(this.email, this.password)
-      .then(() => {
+      .then(async () => {
+        await this.userService.setUser();
         this.router.navigate(['/']);
       });
   }
