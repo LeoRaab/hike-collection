@@ -16,8 +16,8 @@ export class HikeService {
   constructor(private hikeRepository: HikeRepository) {
   }
 
-  getHikeCollection(orderBy: string, orderDirection: OrderByDirection): Observable<Hike[]> {
-    return this.hikeRepository.readAll(orderBy, orderDirection);
+  getHikeCollection(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
+    return this.hikeRepository.readAll(orderBy, orderByDirection);
   }
 
   getHike(hikeId: string): Observable<Hike> {

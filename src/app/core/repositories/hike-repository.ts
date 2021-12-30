@@ -29,9 +29,9 @@ export default class HikeRepository {
       .valueChanges({idField: 'hikeId'});
   }
 
-  readAll(orderBy: string, orderDirection: OrderByDirection): Observable<Hike[]> {
+  readAll(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
     return this.fireStore.collection<Hike>(this.configService.getHikeCollectionPath(),
-        ref => ref.orderBy(orderBy, orderDirection)).valueChanges();
+        ref => ref.orderBy(orderBy, orderByDirection)).valueChanges();
   }
 
   update(hike: Hike): void {
