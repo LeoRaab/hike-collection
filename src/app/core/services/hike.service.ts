@@ -11,8 +11,6 @@ import HikeRepository from '../repositories/hike-repository';
 })
 export class HikeService {
 
-  hikeCollection: Hike[];
-
   constructor(private hikeRepository: HikeRepository) {
   }
 
