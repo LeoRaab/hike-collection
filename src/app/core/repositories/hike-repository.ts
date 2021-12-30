@@ -36,8 +36,8 @@ export default class HikeRepository {
 
   update(hike: Hike): void {
     this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hike.hikeId).update(hike)
-      .then(() => this.loggerService.debug('Hike uploaded!'))
-      .catch(error => this.loggerService.error('Uploading hike failed! ' + error));
+      .then(() => this.loggerService.debug('Hike with id: ' + hike.hikeId + ' updated!'))
+      .catch(error => this.loggerService.error('Updating hike with id: ' + hike.hikeId + ' failed! ' + error));
   }
 
   delete(hikeId): Promise<any> {
