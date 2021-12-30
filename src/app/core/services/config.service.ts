@@ -19,7 +19,6 @@ export class ConfigService {
     return new Promise<void>((resolve, reject) => {
       this.remoteConfig.strings.subscribe((config) => {
         this.config = config;
-        console.log(config);
 
         if (this.config !== null && this.config !== undefined) {
           resolve();

@@ -9,7 +9,7 @@
   <ion-card *ngFor="let hike of hikeCollection" [routerLink]="['/detail/' + hike.hikeId]">
     <app-picture-collection [pictureCollection]="hike.pictureCollection"></app-picture-collection>
     <ion-card-header>
-      <ion-card-subtitle>{{ hike.hikeLocation.address.city }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ hike.location.address.city }}</ion-card-subtitle>
       <ion-card-title>{{ hike.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>

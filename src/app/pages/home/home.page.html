@@ -31,7 +31,7 @@
 
   <app-hike-collection
     *ngIf="hikeCollection"
-    [hikeCollection]="hikeCollection">
+    [hikeCollection]="hikeCollection | filter: filterSettings | search: searchTerm">
   </app-hike-collection>
 
   <ng-container *ngIf="distanceToTop > 50">

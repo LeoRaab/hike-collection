@@ -33,6 +33,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.configService.setHikeCollectionPath(this.userService.getUserId());
+    console.log(this.configService.getHikeCollectionPath());
     this.loadCollection();
   }
 
