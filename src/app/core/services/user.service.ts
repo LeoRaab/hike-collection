@@ -19,16 +19,16 @@ export class UserService {
               private loggerService: LoggerService) {
   }
 
-  setUser(): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
+  public setUser(): Promise<User|null> {
+    return new Promise<User|null>((resolve, reject) => {
       this.auth.user.subscribe((user) => {
         this.user = user;
-        this.configService.setHikeCollectionPath(this.user.uid);
-        this.loggerService.debug('Setting user with id: ' + this.user.uid);
-        resolve(true);
-      }, (error) => {
-        this.loggerService.error('Setting user failed: ' + error);
-        resolve(false);
+
+        if (this.user !== null && this.user !== undefined) {
+          resolve(this.user);
+        } else {
+          reject(null);
+        }
       });
     });
   }

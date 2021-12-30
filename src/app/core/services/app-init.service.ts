@@ -18,15 +18,24 @@ export class AppInitService {
     return new Promise<void>(async (resolve) => {
       this.loggerService.debug('Starting app init');
 
-      const isRemoteConfigFetched = await this.configService.fetchRemoteConfig();
-      const isUserSet = await this.userService.setUser();
+      await this.configService.fetchRemoteConfig()
+        .then(() => {
+          this.loggerService.debug('Loaded remote config');
+        })
+        .catch(() => {
+          this.loggerService.error('Loading remote config failed!');
+          this.loggerService.info('Loading default config instead!');
+        });
 
-      if (isRemoteConfigFetched && isUserSet) {
-        this.loggerService.debug('Finished app init');
-      } else {
-        this.loggerService.info('Finished app init with errors');
-      }
+      await this.userService.setUser()
+        .then((user) => {
+          this.loggerService.debug('Setting user with id: ' + user.uid);
+        })
+        .catch(() => {
+          this.loggerService.error('Setting user failed');
+        });
 
+      this.loggerService.debug('App init finished');
       resolve();
     });
   }

@@ -15,17 +15,16 @@ export class ConfigService {
               private loggerService: LoggerService) {
   }
 
-  public fetchRemoteConfig(): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
+  public fetchRemoteConfig(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
       this.remoteConfig.strings.subscribe((config) => {
-        //TODO: check why we enter here twice??
         this.config = config;
-        this.loggerService.debug('Loaded remote config');
-        resolve(true);
-      }, (error) => {
-        this.loggerService.error('Loading remote config failed! - ' + error);
-        //TODO: find alternative if remote config is not available --> (Standard-Konfig laden zum Beispiel)
-        resolve(false);
+
+        if (this.config !== null && this.config !== undefined) {
+          resolve();
+        } else {
+          reject();
+        }
       });
     });
   }
@@ -40,6 +39,10 @@ export class ConfigService {
 
   public getHikeCollectionPath(): string {
     return this.hikeCollectionPath;
+  }
+
+  public setDefaultConfig(): void {
+    this.config.isDarkModeEnabled = true;
   }
 
 }

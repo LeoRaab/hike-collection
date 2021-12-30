@@ -9,6 +9,7 @@ import {FilterModalPage} from '../modals/filter-modal/filter-modal.page';
 import Hike from '../../core/models/hike.model';
 import {FilterSettings} from '../../core/models/filter-settings.model';
 import {UserService} from '../../core/services/user.service';
+import {ConfigService} from '../../core/services/config.service';
 
 @Component({
   selector: 'app-home',
@@ -25,11 +26,13 @@ export class HomePage implements OnInit {
 
   constructor(private hikeService: HikeService,
               private userService: UserService,
+              private configService: ConfigService,
               private loggerService: LoggerService,
               private modalController: ModalController) {
   }
 
   ngOnInit() {
+    this.configService.setHikeCollectionPath(this.userService.getUserId());
     this.loadCollection();
   }
 
