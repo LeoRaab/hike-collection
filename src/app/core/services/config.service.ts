@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireRemoteConfig} from '@angular/fire/compat/remote-config';
 import {LoggerService} from './logger.service';
 import {UserService} from './user.service';
@@ -8,8 +8,8 @@ import {UserService} from './user.service';
 })
 export class ConfigService {
 
-  public config;
-  public onlineMode = true;
+  private config;
+  private hikeCollectionPath: string;
 
   constructor(private remoteConfig: AngularFireRemoteConfig,
               private userService: UserService,
@@ -30,6 +30,14 @@ export class ConfigService {
 
   public isDarkModeEnabled(): boolean {
     return this.config?.darkModeEnabled ?? false;
+  }
+
+  public setHikeCollectionPath(userId: string): void {
+    this.hikeCollectionPath = 'hikes/user_' + this.userService.getUserId() + '/hikeCollection/';
+  }
+
+  public getHikeCollectionPath(): string {
+    return this.hikeCollectionPath;
   }
 
 }

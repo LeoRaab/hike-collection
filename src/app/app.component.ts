@@ -4,7 +4,6 @@
  * TODO: Loading-Spinner überall
  */
 import { Component } from '@angular/core';
-import {HikeService} from './core/services/hike.service';
 import {UserService} from './core/services/user.service';
 import {MenuController} from '@ionic/angular';
 
@@ -18,7 +17,6 @@ export class AppComponent {
 
   constructor(private userService: UserService,
               private menu: MenuController) {
-    console.log('created');
   }
 
   openFirst() {
