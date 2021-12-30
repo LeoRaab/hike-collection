@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
 import Hike from '../models/hike.model';
-import {LoggerService} from './logger.service';
 import {Observable} from 'rxjs';
 import Picture from '../models/picture.model';
-import {UserService} from './user.service';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat';
 import OrderByDirection = firebase.firestore.OrderByDirection;
-import HikeRepository from '../repositories/HikeRepository';
+import HikeRepository from '../repositories/hike-repository';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +12,8 @@ import HikeRepository from '../repositories/HikeRepository';
 export class HikeService {
 
   hikeCollection: Hike[];
-  hikeRepository: HikeRepository;
 
-  constructor(private fireStore: AngularFirestore,
-              private userService: UserService,
-              private loggerService: LoggerService) {
-  }
-
-  loadRepository(): void {
-    this.hikeRepository = new HikeRepository(this.fireStore, this.loggerService, this.userService);
+  constructor(private hikeRepository: HikeRepository) {
   }
 
   getHikeCollection(orderBy: string, orderDirection: OrderByDirection): Observable<Hike[]> {
