@@ -1,56 +1,28 @@
-/**
- * TODO: Error Handling
- */
-
-import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/compat/firestore';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import Author from '../models/author.model';
-import {map} from 'rxjs/operators';
-import {UserService} from './user.service';
+import AuthorRepository from '../repositories/author-repository';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorService {
 
-  private author: Author;
-  constructor(private fireStore: AngularFirestore,
-              private userService: UserService) { }
-
-  loadAuthor(): void {
-    this.fireStore.collection<Author>('authors', ref => ref.where('userId', '==', this.userService.getUserId()))
-      .valueChanges()
-      .subscribe(author => this.author = author[0]);
+  constructor(private authorRepository: AuthorRepository) {
   }
 
-  getAuthor(): Author {
-    return this.author;
+  public getAuthor(userId: string): Observable<Author> {
+    return this.authorRepository.read(userId);
   }
 
-  getFriendsList(): Author[] {
-    const friendsList = [];
+  public getFriends(author: Author): Author[] {
+    const friends = [];
 
-    for (const authorId of this.author.friendsList) {
-      this.getAuthorById(authorId).subscribe(author => friendsList.push(author));
+    for (const friendId of author.friendsList) {
+      this.getAuthor(friendId).subscribe(friend => friends.push(friend));
     }
 
-    return friendsList;
+    return friends;
   }
-
-  private getAuthorById(authorId: string): Observable<Author> {
-    return this.fireStore.doc<Author>('authors/' + authorId).valueChanges();
-  }
-
-  private getAuthorByUid(userId: string) {
-    let author: Author;
-
-    this.fireStore.collection<Author>('authors', ref => ref.where('userId', '==', userId))
-      .valueChanges()
-      .subscribe(authorList => author = authorList[0]);
-
-    return author;
-  }
-
 
 }

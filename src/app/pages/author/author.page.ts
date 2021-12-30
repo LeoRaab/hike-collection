@@ -1,8 +1,3 @@
-/**
- * TODO: Delete User
- * TODO: User is null error on sign out
- * TOOD: Implement author info
- */
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import Author from '../../core/models/author.model';
@@ -19,23 +14,19 @@ import {AuthorService} from '../../core/services/author.service';
   styleUrls: ['./author.page.scss'],
 })
 export class AuthorPage implements OnInit {
-  author: Author;
-  friendsList?: Author[];
+  author?: Author;
+  friends?: Author[];
 
-  constructor(private userService: UserService,
-              private authorService: AuthorService,
+  constructor(public authorService: AuthorService,
+              private userService: UserService,
               private router: Router) {
-
-    /**
-     * TODO: Nicht Collection, sondern direkt das Doc holen
-     */
-
   }
 
   ngOnInit() {
-    this.author = this.authorService.getAuthor();
-    this.friendsList = this.authorService.getFriendsList();
-    console.log(this.friendsList);
+    this.authorService.getAuthor(this.userService.getUserId()).subscribe(author => {
+      this.author = author;
+      this.friends = this.authorService.getFriends(this.author);
+    });
   }
 
   async logout() {

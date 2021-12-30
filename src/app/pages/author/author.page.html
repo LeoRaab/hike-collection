@@ -6,13 +6,13 @@
 </ion-header>
 
 <ion-content>
-  <h1>{{ author.name }}</h1>
+    <h1 *ngIf="author">{{ author.name }}</h1>
 
-  <ul>
-    <li *ngFor="let friend of friendsList">
-      {{ friend.name }}
-    </li>
-  </ul>
+    <ul *ngIf="friends">
+      <li *ngFor="let friend of friends">
+        {{ friend.name }}
+      </li>
+    </ul>
 
-  <ion-button (click)="logout()">Logout</ion-button>
+    <ion-button (click)="logout()">Logout</ion-button>
 </ion-content>

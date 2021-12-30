@@ -51,7 +51,7 @@ export class UserService {
   async logoutUser() {
     await this.auth.signOut()
       .then(() => {
-        this.user = undefined;
+        this.user = null;
         this.loggerService.debug('User logged out');
       })
       .catch((error) => {
