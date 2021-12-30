@@ -9,10 +9,9 @@ import {ConfigService} from './core/services/config.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  isLoading: false;
 
-  constructor(private userService: UserService,
-              private configService: ConfigService,
+  constructor(public configService: ConfigService,
+              private userService: UserService,
               private menu: MenuController) {
   }
 

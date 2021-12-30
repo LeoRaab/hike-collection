@@ -32,8 +32,8 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.configService.showLoadingSpinner();
     this.configService.setHikeCollectionPath(this.userService.getUserId());
-    console.log(this.configService.getHikeCollectionPath());
     this.loadCollection();
   }
 
@@ -44,6 +44,7 @@ export class HomePage implements OnInit {
         if (event) {
           event.target.complete();
         }
+        this.configService.hideLoadingSpinner();
       });
   }
 

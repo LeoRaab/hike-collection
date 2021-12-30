@@ -8,6 +8,7 @@ import {UserService} from './user.service';
 })
 export class ConfigService {
 
+  public isLoading = false;
   private config;
   private hikeCollectionPath: string;
 
@@ -43,6 +44,14 @@ export class ConfigService {
 
   public setDefaultConfig(): void {
     this.config.isDarkModeEnabled = true;
+  }
+
+  public showLoadingSpinner(): void {
+    this.isLoading = true;
+  }
+
+  public hideLoadingSpinner(): void {
+    this.isLoading = false;
   }
 
 }
