@@ -42,8 +42,8 @@ export class UserService {
     return this.user.uid;
   }
 
-  public getUser(): User {
-    return this.user;
+  public getEmail(): string {
+    return this.user.email;
   }
 
   async loginUser(email: string, password: string) {
