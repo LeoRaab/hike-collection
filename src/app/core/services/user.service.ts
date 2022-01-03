@@ -11,6 +11,7 @@ import {ConfigService} from './config.service';
 })
 export class UserService {
 
+  public isLoggedIn = false;
   private user?: User;
 
   constructor(private fireStore: AngularFirestore,
@@ -23,14 +24,18 @@ export class UserService {
     return new Promise<User | null>((resolve, reject) => {
       this.auth.user.subscribe((user) => {
         this.user = user;
-
         if (this.user !== null && this.user !== undefined) {
+          this.isLoggedIn = true;
           resolve(this.user);
         } else {
           reject(null);
         }
       });
     });
+  }
+
+  hasEmailVerified() {
+    return this.user.emailVerified;
   }
 
   getUserId(): string {
@@ -51,7 +56,7 @@ export class UserService {
   async logoutUser() {
     await this.auth.signOut()
       .then(() => {
-        this.user = null;
+        this.isLoggedIn = false;
         this.loggerService.debug('User logged out');
       })
       .catch((error) => {
