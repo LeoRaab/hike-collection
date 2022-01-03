@@ -56,14 +56,14 @@ export class HikeFormComponent {
     shortDescription: [this.hike.shortDescription],
     longDescription: [this.hike.longDescription],
     location: this.formBuilder.group({
-      coordinates: this.formBuilder.group({
-        latitude: [this.hike.location.coordinates.latitude],
-        longitude: [this.hike.location.coordinates.longitude]
-      }),
       address: this.formBuilder.group({
         street: [this.hike.location.address.street],
         zip: [this.hike.location.address.zip],
         city: [this.hike.location.address.city]
+      }),
+      coordinates: this.formBuilder.group({
+        latitude: [this.hike.location.coordinates.latitude],
+        longitude: [this.hike.location.coordinates.longitude]
       })
     }),
     stats: this.formBuilder.group({

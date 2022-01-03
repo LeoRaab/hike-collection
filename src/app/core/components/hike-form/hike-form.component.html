@@ -1,51 +1,63 @@
 <ion-content>
   <ng-form [formGroup]="hikeForm" (ngSubmit)="handleSaveClick()">
-    <ion-list>
-      <ion-list-header>General</ion-list-header>
-      <ion-item>
-        <ion-label position="stacked">Title</ion-label>
-        <ion-input type="text" formControlName="title"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Short Description</ion-label>
-        <ion-textarea formControlName="shortDescription"></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Long Description</ion-label>
-        <ion-textarea formControlName="longDescription"></ion-textarea>
-      </ion-item>
-    </ion-list>
+    <ng-container>
+      <ion-list>
+        <ion-list-header>General</ion-list-header>
+        <ion-item>
+          <ion-label position="stacked">Title</ion-label>
+          <ion-input type="text" formControlName="title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Short Description</ion-label>
+          <ion-textarea formControlName="shortDescription"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Long Description</ion-label>
+          <ion-textarea formControlName="longDescription"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    </ng-container>
 
-    <ion-list>
-      <ion-list-header formGroupName="location">Location</ion-list-header>
-      <ion-item>
-        <ion-label position="stacked">Street</ion-label>
-        <ion-input formControlName="street"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">ZIP</ion-label>
-        <ion-input formControlName="zip"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">City</ion-label>
-        <ion-input formControlName="city"></ion-input>
-      </ion-item>
+    <ng-container>
+      <ion-list>
+        <ion-list-header>Location</ion-list-header>
 
-      <ion-item formGroupName="coordinates">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-label position="stacked">Latitude</ion-label>
-              <ion-input formControlName="latitude"></ion-input>
-            </ion-col>
-            <ion-col>
-              <ion-label position="stacked">Longitude</ion-label>
-              <ion-input formControlName="longitude"></ion-input>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
+        <ng-container formGroupName="location">
+          <ng-container formGroupName="address">
+            <ion-item>
+              <ion-label position="stacked">Street</ion-label>
+              <ion-input formControlName="street"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">ZIP</ion-label>
+              <ion-input formControlName="zip"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">City</ion-label>
+              <ion-input formControlName="city"></ion-input>
+            </ion-item>
+          </ng-container>
+
+          <ng-container formGroupName="coordinates">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-label position="stacked">Latitude</ion-label>
+                    <ion-input formControlName="latitude"></ion-input>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label position="stacked">Longitude</ion-label>
+                    <ion-input formControlName="longitude"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ng-container>
+
+        </ng-container>
+      </ion-list>
+    </ng-container>
 
     <ion-list>
       <ion-list-header>Pictures</ion-list-header>
@@ -73,21 +85,22 @@
     </ion-list>
 
     <ion-list>
-      <ion-list-header formGroupName="stats">Hike Stats</ion-list-header>
-      <ion-item>
-        <ion-label position="stacked">Duration (dd:hh:mm)</ion-label>
-        <ion-input type="number" formControlName="duration"></ion-input>
-      </ion-item>
+      <ng-container formGroupName="stats">
+        <ion-list-header>Hike Stats</ion-list-header>
+        <ion-item>
+          <ion-label position="stacked">Duration (dd:hh:mm)</ion-label>
+          <ion-input type="number" formControlName="duration"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Lowest Point (m)</ion-label>
-        <ion-input type="number" formControlName="lowestPoint"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Highest Point (m)</ion-label>
-        <ion-input type="number" formControlName="highestPoint"></ion-input>
-      </ion-item>
-
+        <ion-item>
+          <ion-label position="stacked">Lowest Point (m)</ion-label>
+          <ion-input type="number" formControlName="lowestPoint"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Highest Point (m)</ion-label>
+          <ion-input type="number" formControlName="highestPoint"></ion-input>
+        </ion-item>
+      </ng-container>
       <div>
         <ion-button type="button" color="success" expand="full" (click)="handleSaveClick()">Save</ion-button>
       </div>
