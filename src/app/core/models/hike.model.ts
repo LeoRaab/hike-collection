@@ -4,7 +4,6 @@ import HikeStats from './hike-stats.model';
 
 export default interface Hike {
   hikeId: string;
-  userId: string;
   title: string;
   shortDescription: string;
   longDescription: string;
