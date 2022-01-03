@@ -4,6 +4,7 @@ import {AuthorService} from '../../core/services/author.service';
 import {UserService} from '../../core/services/user.service';
 import {LoggerService} from '../../core/services/logger.service';
 import firebase from 'firebase/compat';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,7 @@ export class RegisterPage {
 
   constructor(private userService: UserService,
               private authorService: AuthorService,
+              private router: Router,
               private loggerService: LoggerService) {
   }
 
@@ -36,13 +38,14 @@ export class RegisterPage {
         this.loggerService.debug('User registered!');
         user.sendEmailVerification()
           .then(() => {
-            this.isRegistrationFinished = true;
+            this.router.navigate(['/verify']);
+            this.loggerService.debug('Sent email verification link!');
           })
           .catch(() => {
             /**
              * TODO: Display error
              */
-            this.loggerService.error('Sending registration link failed!');
+            this.loggerService.error('Sending email verification link failed!');
           });
       })
       .catch(() => {

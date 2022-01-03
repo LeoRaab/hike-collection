@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     if (this.userService.isLoggedIn && this.userService.hasEmailVerified()) {
       return true;
     } else if (this.userService.isLoggedIn && !this.userService.hasEmailVerified()) {
-      return this.router.parseUrl('/import');
+      return this.router.parseUrl('/verify');
     } else {
       return this.router.parseUrl('/login');
     }

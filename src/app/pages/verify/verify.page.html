@@ -5,5 +5,15 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-img src="../../../assets/register.svg"></ion-img>
+      </ion-col>
+      <ion-col size="12">
+        <h4>Registration successful!</h4>
+        <p>We sent a mail to {{ userService.getEmail() }}. Please click the link to verify your account.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

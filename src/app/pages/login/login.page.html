@@ -6,21 +6,26 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input [(ngModel)]="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input [(ngModel)]="password" type="password"></ion-input>
-    </ion-item>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-button (click)="login()" expand="block" color="success">Login</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+  <form (ngSubmit)="login()" #form="ngForm">
+    <ion-card>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input [(ngModel)]="email" name="email" minlength="6" maxlength="50" email required="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input [(ngModel)]="password" name="password" type="password" minlength="8"></ion-input>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="tertiary" [routerLink]="['/register']">Register</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button type="submit" expand="block" color="success" [disabled]="!form.valid">Login</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </form>
 </ion-content>

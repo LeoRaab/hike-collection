@@ -34,12 +34,16 @@ export class UserService {
     });
   }
 
-  hasEmailVerified() {
+  public hasEmailVerified() {
     return this.user.emailVerified;
   }
 
-  getUserId(): string {
+  public getUserId(): string {
     return this.user.uid;
+  }
+
+  public getUser(): User {
+    return this.user;
   }
 
   async loginUser(email: string, password: string) {
