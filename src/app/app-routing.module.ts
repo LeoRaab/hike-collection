@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {AngularFireAuthGuard, redirectUnauthorizedTo, emailVerified} from '@angular/fire/compat/auth-guard';
-import {map} from 'rxjs/operators';
-import {pipe} from 'rxjs';
+import {AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/compat/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
-const isVerified = () => map(user => user.emailVerified ? )
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: emailVerified }
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: '',
