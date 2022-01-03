@@ -38,4 +38,8 @@ export class HikeService {
     this.hikeRepository.updatePictureCollection(hikeId, pictureCollection);
   }
 
+  generateHikeId(): string {
+    return this.hikeRepository.createHikeId();
+  }
+
 }

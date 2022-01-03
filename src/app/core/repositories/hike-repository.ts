@@ -24,6 +24,10 @@ export default class HikeRepository {
       .catch(error => this.loggerService.error('Adding hike failed! ' + error));
   }
 
+  createHikeId(): string {
+    return this.fireStore.createId();
+  }
+
   read(hikeId: string): Observable<Hike> {
     return this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hikeId)
       .valueChanges({idField: 'hikeId'});
