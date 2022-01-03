@@ -19,8 +19,8 @@ export class UserService {
               private loggerService: LoggerService) {
   }
 
-  public setUser(): Promise<User|null> {
-    return new Promise<User|null>((resolve, reject) => {
+  public setUser(): Promise<User | null> {
+    return new Promise<User | null>((resolve, reject) => {
       this.auth.user.subscribe((user) => {
         this.user = user;
 
@@ -57,5 +57,17 @@ export class UserService {
       .catch((error) => {
         this.loggerService.error('Logout failed: ' + error);
       });
+  }
+
+  async registerUser(email: string, password: string): Promise<User | null> {
+    return new Promise<User | null>(async (resolve, reject) => {
+      await this.auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          resolve(userCredential.user);
+        })
+        .catch(() => {
+          reject(null);
+        });
+    });
   }
 }

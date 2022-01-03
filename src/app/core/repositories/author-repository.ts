@@ -20,8 +20,8 @@ export default class AuthorRepository {
               private loggerService: LoggerService) {
   }
 
-  create(author: Author): void {
-    this.fireStore.collection<Author>(this.authorPath).add(author)
+  create(userId: string, author: Author): void {
+    this.fireStore.collection<Author>(this.authorPath).doc(userId).set(author)
       .then(() => this.loggerService.debug('Author added!'))
       .catch(error => this.loggerService.error('Adding author failed! ' + error));
   }
@@ -35,10 +35,13 @@ export default class AuthorRepository {
         ref => ref.orderBy(orderBy, orderByDirection)).valueChanges();
   }
 
-  update(author: Author): void {
-    this.fireStore.doc<Author>(this.authorPath + author.userId).update(author)
-      .then(() => this.loggerService.debug('Author with id: ' + author.userId + ' updated!'))
-      .catch(error => this.loggerService.error('Updating Author with id: ' + author.userId + ' failed! ' + error));
+  /**
+   * TODO: How to retrieve userId
+   */
+  update(author: Author, userId: string): void {
+    this.fireStore.doc<Author>(this.authorPath + userId).update(author)
+      .then(() => this.loggerService.debug('Author with id: ' + userId + ' updated!'))
+      .catch(error => this.loggerService.error('Updating Author with id: ' + userId + ' failed! ' + error));
   }
 
   delete(authorId): Promise<any> {

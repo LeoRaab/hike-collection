@@ -25,4 +25,8 @@ export class AuthorService {
     return friends;
   }
 
+  public addAuthor(userId: string, author: Author): void {
+    this.authorRepository.create(userId, author);
+  }
+
 }

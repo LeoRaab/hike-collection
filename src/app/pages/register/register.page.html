@@ -5,5 +5,34 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-card *ngIf="!isRegistrationFinished">
+    <form (ngSubmit)="register()" #form="ngForm">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input [(ngModel)]="author.name" name="name" minlength="3" maxlength="30" required #authorName="ngModel"></ion-input>
+        <ion-text *ngIf="authorName.touched && authorName.invalid" color="danger">Name fehlt!</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input [(ngModel)]="email" name="email" minlength="6" maxlength="50" email required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" expand="block" color="success" [disabled]="!form.valid">Register</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-card>
+  <ion-card *ngIf="isRegistrationFinished">
+    <ion-img src="../../../assets/register.svg"></ion-img>
+    <ion-text>
+      <h4>Mail sent to {{ user.email }}</h4>
+    </ion-text>
+  </ion-card>
 </ion-content>
