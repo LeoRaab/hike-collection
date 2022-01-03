@@ -13,7 +13,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Long Description</ion-label>
-          <ion-textarea formControlName="longDescription"></ion-textarea>
+          <ion-textarea formControlName="longDescription" auto-grow="true"></ion-textarea>
         </ion-item>
       </ion-list>
     </ng-container>
@@ -88,7 +88,7 @@
       <ng-container formGroupName="stats">
         <ion-list-header>Hike Stats</ion-list-header>
         <ion-item>
-          <ion-label position="stacked">Duration (dd:hh:mm)</ion-label>
+          <ion-label position="stacked">Duration (min)</ion-label>
           <ion-input type="number" formControlName="duration"></ion-input>
         </ion-item>
 
@@ -102,7 +102,7 @@
         </ion-item>
       </ng-container>
       <div>
-        <ion-button type="button" color="success" expand="full" (click)="handleSaveClick()">Save</ion-button>
+        <ion-button type="submit" color="success" expand="full" [disabled]="!hikeForm.valid">Save</ion-button>
       </div>
     </ion-list>
   </ng-form>

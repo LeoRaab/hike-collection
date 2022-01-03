@@ -1,14 +1,3 @@
-/**
- * TODO: Überlegen was mit Photo passiert, falls speichern des Hikes schief läuft und das Photo im Storage ist,
- *       aber nicht in Firerstore gepeichert wurde
- *
- * TODO: try and catch für takePhoto & photoFromGallery + messages!
- * TODO: Unbedingt auf den Photoupload warten
- * TODO: Photos auch aus Storage löschen
- * TODO: Werte erst in PhotoCollection speichern bei Save click -> nicht auch beim normalen schließen
- * TODO: SaveButton bei PhotoModal nur zeigen, wenn Bilder da sind
- * TODO: Duration Anzeigeformat überlegen
- */
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import Hike from '../../models/hike.model';
 import {LoggerService} from '../../services/logger.service';
@@ -16,7 +5,7 @@ import {ModalController} from '@ionic/angular';
 import {PictureModalPage} from '../../../pages/modals/picture-modal/picture-modal.page';
 import {PhotoService} from '../../services/photo.service';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-hike-form',
@@ -52,24 +41,74 @@ export class HikeFormComponent {
   };
 
   hikeForm = this.formBuilder.group({
-    title: [this.hike.title],
-    shortDescription: [this.hike.shortDescription],
-    longDescription: [this.hike.longDescription],
+    title: new FormControl(this.hike.title, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(80)
+    ]),
+    shortDescription: new FormControl(
+      this.hike.shortDescription, [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
+    longDescription: new FormControl(
+      this.hike.longDescription, [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
     location: this.formBuilder.group({
       address: this.formBuilder.group({
-        street: [this.hike.location.address.street],
-        zip: [this.hike.location.address.zip],
-        city: [this.hike.location.address.city]
+        street: new FormControl(
+          this.hike.location.address.street, [
+            Validators.required,
+            Validators.minLength(3)
+          ]),
+        zip: new FormControl(
+          this.hike.location.address.zip, [
+            Validators.required,
+            Validators.min(1000),
+            Validators.max(9999)
+          ]),
+        city: new FormControl(
+          this.hike.location.address.city, [
+            Validators.required,
+            Validators.minLength(2)
+          ]),
       }),
       coordinates: this.formBuilder.group({
-        latitude: [this.hike.location.coordinates.latitude],
-        longitude: [this.hike.location.coordinates.longitude]
+        latitude: new FormControl(
+          this.hike.location.coordinates.latitude, [
+            Validators.required,
+            Validators.min(-90),
+            Validators.max(90)
+          ]),
+        longitude: new FormControl(
+          this.hike.location.coordinates.longitude, [
+            Validators.required,
+            Validators.min(-180),
+            Validators.max(180)
+          ]),
       })
     }),
     stats: this.formBuilder.group({
-      duration: [this.hike.stats.duration],
-      lowestPoint: [this.hike.stats.lowestPoint],
-      highestPoint: [this.hike.stats.highestPoint]
+      duration: new FormControl(
+        this.hike.shortDescription, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(4320) // 3 Days in minutes
+        ]),
+      lowestPoint: new FormControl(
+        this.hike.stats.lowestPoint, [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(9000)
+        ]),
+      highestPoint: new FormControl(
+        this.hike.stats.highestPoint, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(9000)
+        ]),
     })
   });
 
@@ -134,5 +173,4 @@ export class HikeFormComponent {
 
     console.log(this.hike.pictureCollection);
   }
-
 }
