@@ -33,7 +33,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.configService.showLoadingSpinner();
-    this.configService.setHikeCollectionPath(this.userService.getUserId());
     this.loadCollection();
   }
 

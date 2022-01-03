@@ -3,6 +3,7 @@ import {LoggerService} from '../../core/services/logger.service';
 import {MessageService} from '../../core/services/message.service';
 import {Router} from '@angular/router';
 import {HikeService} from '../../core/services/hike.service';
+import Hike from '../../core/models/hike.model';
 
 @Component({
   selector: 'app-new',
@@ -18,7 +19,7 @@ export class NewPage {
     private hikeService: HikeService
   ) { }
 
-  async handleSaveRequest(hike) {
+  async handleSaveRequest(hike: Hike) {
     this.loggerService.debug(JSON.stringify(hike));
 
     try {

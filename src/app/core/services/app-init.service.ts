@@ -29,6 +29,7 @@ export class AppInitService {
 
       await this.userService.setUser()
         .then((user) => {
+          this.configService.setHikeCollectionPath(this.userService.getUserId());
           this.loggerService.debug('Setting user with id: ' + user.uid);
         })
         .catch(() => {

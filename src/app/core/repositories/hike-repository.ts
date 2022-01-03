@@ -19,7 +19,7 @@ export default class HikeRepository {
   }
 
   create(hike: Hike): void {
-    this.fireStore.collection<Hike>(this.configService.getHikeCollectionPath()).add(hike)
+    this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hike.hikeId).set(hike)
       .then(() => this.loggerService.debug('Hike added!'))
       .catch(error => this.loggerService.error('Adding hike failed! ' + error));
   }
@@ -35,7 +35,7 @@ export default class HikeRepository {
 
   readAll(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
     return this.fireStore.collection<Hike>(this.configService.getHikeCollectionPath(),
-        ref => ref.orderBy(orderBy, orderByDirection)).valueChanges();
+        ref => ref.orderBy(orderBy, orderByDirection)).valueChanges({idField: 'hikeId'});
   }
 
   update(hike: Hike): void {

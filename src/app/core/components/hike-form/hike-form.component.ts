@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import Hike from '../../models/hike.model';
 import {LoggerService} from '../../services/logger.service';
 import {ModalController} from '@ionic/angular';
 import {PictureModalPage} from '../../../pages/modals/picture-modal/picture-modal.page';
 import {PhotoService} from '../../services/photo.service';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {HikeService} from '../../services/hike.service';
+import {ConfigService} from '../../services/config.service';
 
 @Component({
   selector: 'app-hike-form',
@@ -16,8 +16,7 @@ export class HikeFormComponent {
   @Output() saveHike = new EventEmitter<Hike>();
 
   @Input() hike: Hike = {
-    hikeId: '',
-    userId: '',
+    hikeId: this.hikeService.generateHikeId(),
     title: '',
     shortDescription: '',
     longDescription: '',
@@ -40,86 +39,14 @@ export class HikeFormComponent {
     pictureCollection: []
   };
 
-  hikeForm = this.formBuilder.group({
-    title: new FormControl(this.hike.title, [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(80)
-    ]),
-    shortDescription: new FormControl(
-      this.hike.shortDescription, [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-    longDescription: new FormControl(
-      this.hike.longDescription, [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-    location: this.formBuilder.group({
-      address: this.formBuilder.group({
-        street: new FormControl(
-          this.hike.location.address.street, [
-            Validators.required,
-            Validators.minLength(3)
-          ]),
-        zip: new FormControl(
-          this.hike.location.address.zip, [
-            Validators.required,
-            Validators.min(1000),
-            Validators.max(9999)
-          ]),
-        city: new FormControl(
-          this.hike.location.address.city, [
-            Validators.required,
-            Validators.minLength(2)
-          ]),
-      }),
-      coordinates: this.formBuilder.group({
-        latitude: new FormControl(
-          this.hike.location.coordinates.latitude, [
-            Validators.required,
-            Validators.min(-90),
-            Validators.max(90)
-          ]),
-        longitude: new FormControl(
-          this.hike.location.coordinates.longitude, [
-            Validators.required,
-            Validators.min(-180),
-            Validators.max(180)
-          ]),
-      })
-    }),
-    stats: this.formBuilder.group({
-      duration: new FormControl(
-        this.hike.shortDescription, [
-          Validators.required,
-          Validators.min(1),
-          Validators.max(4320) // 3 Days in minutes
-        ]),
-      lowestPoint: new FormControl(
-        this.hike.stats.lowestPoint, [
-          Validators.required,
-          Validators.min(0),
-          Validators.max(9000)
-        ]),
-      highestPoint: new FormControl(
-        this.hike.stats.highestPoint, [
-          Validators.required,
-          Validators.min(1),
-          Validators.max(9000)
-        ]),
-    })
-  });
-
   constructor(
+    private hikeService: HikeService,
+    private configService: ConfigService,
     private modalController: ModalController,
     private loggerService: LoggerService,
-    private photoService: PhotoService,
-    private auth: AngularFireAuth,
-    private formBuilder: FormBuilder
+    private photoService: PhotoService
   ) {
-    this.auth.user.subscribe(user => this.hike.userId);
+    console.log(this.hike.hikeId);
   }
 
   handleSaveClick() {
@@ -153,17 +80,17 @@ export class HikeFormComponent {
     }
   }
 
-  async uploadPhotoFromGallery() {
-    try {
-      const photo = await this.photoService.uploadPhotoFromGallery(this.hike.hikeId);
-      this.loggerService.debug('Photo from Gallery: ' + photo);
-      this.updatePictureCollection(photo);
-    } catch (e) {
-      this.loggerService.error(e);
-    }
+  uploadPhotoFromGallery(): void {
+    this.configService.showLoadingSpinner();
+    this.photoService.uploadPhotoFromGallery(this.hike.hikeId)
+      .then((filePath) => {
+        this.loggerService.debug('Photo from Gallery: ' + filePath);
+        this.updatePictureCollection(filePath);
+        this.configService.hideLoadingSpinner();
+      });
   }
 
-  private updatePictureCollection(storageUrl) {
+  private updatePictureCollection(storageUrl: string) {
     const altText = storageUrl.split('/').pop();
 
     this.hike.pictureCollection.push({
@@ -171,6 +98,6 @@ export class HikeFormComponent {
       altText
     });
 
-    console.log(this.hike.pictureCollection);
   }
+
 }
