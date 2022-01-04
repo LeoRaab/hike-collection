@@ -6,13 +6,31 @@
 </ion-header>
 
 <ion-content>
-    <h1 *ngIf="author">{{ author.name }}</h1>
+  <h1 *ngIf="author">{{ author.name }}</h1>
 
-    <ul *ngIf="friends">
-      <li *ngFor="let friend of friends">
+  <ion-grid *ngIf="friends">
+    <ion-row *ngFor="let friend of friends">
+      <ion-col size="10">
         {{ friend.name }}
-      </li>
-    </ul>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="friendLinkUrl">
+      <ion-col size="12">
+        To make friends copy this url and send it to a friend!
+      </ion-col>
+      <ion-col size="10">
+        {{ this.friendLinkUrl }}
+      </ion-col>
+      <ion-col size="2">
+        <ion-button (click)="copyFriendLinkUrl()" expand="full" fill="clear">
+          <ion-icon name="copy-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <ion-button (click)="logout()">Logout</ion-button>
+  <ion-button (click)="logout()">Logout</ion-button>
 </ion-content>
