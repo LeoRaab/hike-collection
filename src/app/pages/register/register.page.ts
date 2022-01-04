@@ -3,7 +3,6 @@ import Author from '../../core/models/author.model';
 import {AuthorService} from '../../core/services/author.service';
 import {UserService} from '../../core/services/user.service';
 import {LoggerService} from '../../core/services/logger.service';
-import firebase from 'firebase/compat';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,9 +11,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage {
-  user?: firebase.User;
 
   author: Author = {
+    authorId: '',
     name: '',
     friendsList: [],
     avatar: ''
@@ -22,7 +21,6 @@ export class RegisterPage {
 
   email: string;
   password: string;
-  isRegistrationFinished: boolean;
 
   constructor(private userService: UserService,
               private authorService: AuthorService,
@@ -33,8 +31,8 @@ export class RegisterPage {
   register() {
     this.userService.registerUser(this.email, this.password)
       .then((user) => {
-        this.user = user;
-        this.authorService.addAuthor(this.user.uid, this.author);
+        this.author.authorId = user.uid;
+        this.authorService.addAuthor(this.author);
         this.loggerService.debug('User registered!');
         user.sendEmailVerification()
           .then(() => {

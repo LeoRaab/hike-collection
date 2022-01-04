@@ -20,8 +20,8 @@ export default class AuthorRepository {
               private loggerService: LoggerService) {
   }
 
-  create(userId: string, author: Author): void {
-    this.fireStore.collection<Author>(this.authorPath).doc(userId).set(author)
+  create(author: Author): void {
+    this.fireStore.collection<Author>(this.authorPath).doc(author.authorId).set(author)
       .then(() => this.loggerService.debug('Author added!'))
       .catch(error => this.loggerService.error('Adding author failed! ' + error));
   }
