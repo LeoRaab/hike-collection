@@ -7,11 +7,10 @@ import {Camera, CameraResultType, CameraSource, Photo} from '@capacitor/camera';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PictureService {
 
-  constructor(private fireStorage: AngularFireStorage,
-              private messageService: MessageService,
-              private loggerService: LoggerService) {
+  constructor(private fireStorage: AngularFireStorage) {
   }
 
   public getPicture(cameraSource: CameraSource): Promise<Photo> {
