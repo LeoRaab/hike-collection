@@ -8,21 +8,52 @@
 <ion-content>
   <h1 *ngIf="author">{{ author.name }}</h1>
 
-  <ion-grid *ngIf="friends">
-    <ion-row *ngFor="let friend of friends">
+  <ion-grid *ngIf="friends && friends.length > 0">
+    <ion-row>
+      <ion-col>Friends</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let friend of friends" class="ion-align-items-center">
       <ion-col size="10">
         {{ friend.name }}
       </ion-col>
-      <ion-col>
-        <ion-icon name="close-outline"></ion-icon>
+      <ion-col size="2">
+        <ion-button (click)="removeFriend(friend.authorId)" expand="full" color="danger" fill="clear">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="friendLinkUrl">
-      <ion-col size="12">
+  </ion-grid>
+
+  <ion-grid *ngIf="pendingFriends && pendingFriends.length > 0">
+    <ion-row>
+      <ion-col>Friend requests</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let pendingFriend of pendingFriends" class="ion-align-items-center">
+      <ion-col size="8">
+        {{ pendingFriend.name }}
+      </ion-col>
+      <ion-col size="2">
+        <ion-button (click)="denyFriendRequest(pendingFriend.authorId)" expand="full" color="danger" fill="clear">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button (click)="confirmFriendRequest(pendingFriend.authorId)" expand="full" color="success" fill="clear">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="addFriendUrl">
+    <ion-row>
+      <ion-col>
         To make friends copy this url and send it to a friend!
       </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
       <ion-col size="10">
-        {{ this.friendLinkUrl }}
+        {{ this.addFriendUrl }}
       </ion-col>
       <ion-col size="2">
         <ion-button (click)="copyFriendLinkUrl()" expand="full" fill="clear">

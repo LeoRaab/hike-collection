@@ -38,10 +38,10 @@ export default class AuthorRepository {
   /**
    * TODO: How to retrieve userId
    */
-  update(author: Author, userId: string): void {
-    this.fireStore.doc<Author>(this.authorPath + userId).update(author)
-      .then(() => this.loggerService.debug('Author with id: ' + userId + ' updated!'))
-      .catch(error => this.loggerService.error('Updating Author with id: ' + userId + ' failed! ' + error));
+  update(author: Author): void {
+    this.fireStore.doc<Author>(this.authorPath + author.authorId).update(author)
+      .then(() => this.loggerService.debug('Author with id: ' + author.authorId + ' updated!'))
+      .catch(error => this.loggerService.error('Updating Author with id: ' + author.authorId + ' failed! ' + error));
   }
 
   delete(authorId): Promise<any> {

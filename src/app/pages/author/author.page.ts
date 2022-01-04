@@ -13,7 +13,8 @@ import { Clipboard } from '@capacitor/clipboard';
 export class AuthorPage implements OnInit {
   author?: Author;
   friends?: Author[];
-  friendLinkUrl?: string;
+  pendingFriends?: Author[];
+  addFriendUrl?: string;
 
   constructor(public authorService: AuthorService,
               private userService: UserService,
@@ -24,21 +25,34 @@ export class AuthorPage implements OnInit {
     this.authorService.getAuthor(this.userService.getUserId())
       .subscribe(author => {
         this.author = author;
-        this.friends = this.authorService.getFriends(this.author);
+        this.friends = this.authorService.getFriends(this.author, this.author.friendsList);
+        this.pendingFriends = this.authorService.getFriends(this.author, this.author.pendingFriendsList);
         /**
          * TODO: put Url in config
          */
-        this.friendLinkUrl = 'http://localhost:4200/author/friend/' + this.author.authorId;
+        this.addFriendUrl = 'http://localhost:4200/author/friend/add/' + this.author.authorId;
       });
   }
 
-  async copyFriendLinkUrl() {
+  public confirmFriendRequest(friendId: string): void {
+    this.authorService.addToFriendsList(this.author, friendId);
+  }
+
+  public denyFriendRequest(friendId: string) {
+    this.authorService.removeFromPendingFriendsList(this.author, friendId);
+  }
+
+  public removeFriend(friendId: string): void {
+    this.authorService.removeFromFriendList(this.author, friendId);
+  }
+
+  public async copyFriendLinkUrl() {
     await Clipboard.write({
-      url: this.friendLinkUrl
+      url: this.addFriendUrl
     });
   }
 
-  logout() {
+  public logout() {
     this.userService.logoutUser()
       .then(() => {
         this.router.navigate(['/']);

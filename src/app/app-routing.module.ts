@@ -39,6 +39,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'author/friend/add/:authorId',
+    loadChildren: () => import('./pages/add-friend/add-friend.module').then( m => m.AddFriendPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
@@ -54,6 +59,10 @@ const routes: Routes = [
   {
     path: 'verify',
     loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
+  },
+  {
+    path: 'add-friend',
+    loadChildren: () => import('./pages/add-friend/add-friend.module').then( m => m.AddFriendPageModule)
   }
 ];
 

@@ -16,6 +16,7 @@ export class RegisterPage {
     authorId: '',
     name: '',
     friendsList: [],
+    pendingFriendsList: [],
     avatar: ''
   };
 
