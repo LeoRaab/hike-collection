@@ -6,8 +6,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import Picture from '../../../core/models/picture.model';
 import {ModalController} from '@ionic/angular';
 import {LoggerService} from '../../../core/services/logger.service';
-import {PhotoService} from '../../../core/services/photo.service';
 import {MessageService} from '../../../core/services/message.service';
+import {PictureService} from '../../../core/services/picture.service';
 
 @Component({
   selector: 'app-picture-modal',
@@ -20,7 +20,7 @@ export class PictureModalPage implements OnInit {
 
   constructor(private modalController: ModalController,
               private loggerService: LoggerService,
-              private photoService: PhotoService,
+              private pictureService: PictureService,
               private messageService: MessageService
   ) {
   }
@@ -39,12 +39,15 @@ export class PictureModalPage implements OnInit {
 
     if (confirmState === 'confirm') {
       const storageUrl = this.pictureCollection[pictureId].storageUrl;
-      await this.photoService.deletePhotoFromStorage(storageUrl);
+      await this.pictureService.deletePictureFromStorage(storageUrl);
       this.pictureCollection.splice(pictureId, 1);
     }
   }
 
   savePictureCollection() {
+    /**
+     * TODO: Why are there two collections??
+     */
     this.pictureCollection = this.tmpPictureCollection;
     this.modalController.dismiss( {
       tmpPictureCollection: this.tmpPictureCollection

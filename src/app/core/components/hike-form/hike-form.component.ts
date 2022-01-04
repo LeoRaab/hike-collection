@@ -3,9 +3,10 @@ import Hike from '../../models/hike.model';
 import {LoggerService} from '../../services/logger.service';
 import {ModalController} from '@ionic/angular';
 import {PictureModalPage} from '../../../pages/modals/picture-modal/picture-modal.page';
-import {PhotoService} from '../../services/photo.service';
 import {HikeService} from '../../services/hike.service';
 import {ConfigService} from '../../services/config.service';
+import {CameraSource} from '@capacitor/camera';
+import {PictureService} from '../../services/picture.service';
 
 @Component({
   selector: 'app-hike-form',
@@ -39,19 +40,18 @@ export class HikeFormComponent {
     pictureCollection: []
   };
 
+  cameraSource = CameraSource;
+
   constructor(
     private hikeService: HikeService,
     private configService: ConfigService,
     private modalController: ModalController,
     private loggerService: LoggerService,
-    private photoService: PhotoService
+    private pictureService: PictureService
   ) {
-    console.log(this.hike.hikeId);
   }
 
   handleSaveClick() {
-    //validate -> try and catch
-    this.loggerService.debug('Clicked save form');
     this.saveHike.emit(this.hike);
   }
 
@@ -70,23 +70,24 @@ export class HikeFormComponent {
     }
   }
 
-  async takePhoto() {
-    try {
-      const photo = await this.photoService.takePhoto(this.hike.hikeId);
-      this.loggerService.debug('Taken Photo: ' + photo);
-      this.updatePictureCollection(photo);
-    } catch (e) {
-      this.loggerService.error(e);
-    }
-  }
-
-  uploadPhotoFromGallery(): void {
+  public addPicture(cameraSource: CameraSource): void {
     this.configService.showLoadingSpinner();
-    this.photoService.uploadPhotoFromGallery(this.hike.hikeId)
-      .then((filePath) => {
-        this.loggerService.debug('Photo from Gallery: ' + filePath);
-        this.updatePictureCollection(filePath);
+    this.pictureService.getPicture(cameraSource)
+      .then((photo) => {
+        this.pictureService.uploadPicture(photo, this.hike.hikeId)
+          .then((filePath) => {
+            this.updatePictureCollection(filePath);
+            this.configService.hideLoadingSpinner();
+            this.loggerService.debug('Picture uploaded!');
+          })
+          .catch((e) => {
+            this.configService.hideLoadingSpinner();
+            this.loggerService.error('Uploading picture failed!');
+          });
+      })
+      .catch(() => {
         this.configService.hideLoadingSpinner();
+        this.loggerService.error('Getting picture failed!');
       });
   }
 
@@ -97,7 +98,6 @@ export class HikeFormComponent {
       storageUrl,
       altText
     });
-
   }
 
 }

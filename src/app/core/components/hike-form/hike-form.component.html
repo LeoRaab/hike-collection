@@ -85,7 +85,7 @@
         <ion-grid>
           <ion-row class="ion-justify-content-evenly">
             <ion-col>
-              <ion-button (click)="takePhoto()" size="large" color="tertiary">
+              <ion-button (click)="addPicture(cameraSource.Camera)" size="large" color="tertiary">
                 <ion-icon name="camera-outline"></ion-icon>
               </ion-button>
             </ion-col>
@@ -95,7 +95,7 @@
               </ion-button>
             </ion-col>
             <ion-col>
-              <ion-button (click)="uploadPhotoFromGallery()" size="large" color="tertiary">
+              <ion-button (click)="addPicture(cameraSource.Photos)" size="large" color="tertiary">
                 <ion-icon name="folder-open-outline"></ion-icon>
               </ion-button>
             </ion-col>
