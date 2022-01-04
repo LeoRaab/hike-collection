@@ -20,7 +20,6 @@ export class ConfigService {
     return new Promise<void>((resolve, reject) => {
       this.remoteConfig.strings.subscribe((config) => {
         this.config = config;
-
         if (this.config !== null && this.config !== undefined) {
           resolve();
         } else {
@@ -35,7 +34,7 @@ export class ConfigService {
   }
 
   public setHikeCollectionPath(userId: string): void {
-    this.hikeCollectionPath = 'hikes/user_' + userId + '/hikeCollection/';
+    this.hikeCollectionPath = 'hikes/author_' + userId + '/hikeCollection/';
   }
 
   public getHikeCollectionPath(): string {
