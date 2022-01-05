@@ -16,7 +16,7 @@ import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAnalyticsModule} from '@angular/fire/compat/analytics';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FilterModalPage} from './pages/modals/filter-modal/filter-modal.page';
 import {CoreModule} from './core/core.module';
 import {MenuComponent} from './core/components/menu/menu.component';
@@ -50,6 +50,7 @@ export const initApp = (appInitService: AppInitService) => async () => {
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
+    ReactiveFormsModule,
     CoreModule
   ],
   providers: [
