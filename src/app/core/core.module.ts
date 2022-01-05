@@ -16,6 +16,7 @@ import {FormatMeterPipe} from './pipes/format-meter.pipe';
 import {FormatDurationPipe} from './pipes/format-duration.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
 import {SearchPipe} from './pipes/search.pipe';
+import { GetAuthorNamePipe } from './pipes/get-author-name.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {SearchPipe} from './pipes/search.pipe';
     FormatMeterPipe,
     FormatDurationPipe,
     FilterPipe,
-    SearchPipe
+    SearchPipe,
+    GetAuthorNamePipe
   ],
   imports: [
     CommonModule,
