@@ -7,6 +7,11 @@
 
 <ng-container *ngIf="hikeCollection">
   <ion-card *ngFor="let hike of hikeCollection" [routerLink]="['/detail/' + hike.hikeId]">
+    <ion-item *ngIf="hike.author.authorId !== authorService.getAuthor().authorId">
+      <ion-badge color="tertiary" slot="end">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-badge>
+    </ion-item>
     <app-picture-collection [pictureCollection]="hike.pictureCollection"></app-picture-collection>
     <ion-card-header>
       <ion-card-subtitle>{{ hike.location.address.city }}</ion-card-subtitle>

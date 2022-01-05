@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import Hike from '../../models/hike.model';
+import {AuthorService} from '../../services/author.service';
 
 @Component({
   selector: 'app-hike-collection',
@@ -10,7 +11,7 @@ export class HikeCollectionComponent implements OnInit{
 
   @Input() hikeCollection: Hike[];
 
-  constructor() { }
+  constructor(public authorService: AuthorService) { }
 
   ngOnInit() {
 
