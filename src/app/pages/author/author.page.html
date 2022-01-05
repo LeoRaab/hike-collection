@@ -1,67 +1,74 @@
 <ion-header>
   <ion-toolbar>
-    <ion-back-button text="" slot="start"></ion-back-button>
+    <ion-back-button text="" slot="start" color="success"></ion-back-button>
     <ion-title>Author</ion-title>
+    <ion-button slot="end" fill="clear" (click)="logout()" color="success">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <h1 *ngIf="author">{{ author.name }}</h1>
+  <ion-list *ngIf="author">
+    <ion-list-header>Profile</ion-list-header>
+    <ion-item>
+      <ion-label>
+        <p>Name</p>
+        <h2>{{ author.name }}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Email: </p>
+        <h2>{{ author.email }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
-  <ion-grid *ngIf="friends && friends.length > 0">
-    <ion-row>
-      <ion-col>Friends</ion-col>
-    </ion-row>
-    <ion-row *ngFor="let friend of friends" class="ion-align-items-center">
-      <ion-col size="10">
-        {{ friend.name }}
-      </ion-col>
-      <ion-col size="2">
-        <ion-button (click)="removeFriend(friend.authorId)" expand="full" color="danger" fill="clear">
-          <ion-icon name="close-outline"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list *ngIf="friends && friends.length > 0">
+    <ion-list-header>Friends</ion-list-header>
+    <ion-item *ngFor="let friend of friends" >
+      <ion-label>
+        <h2>{{ friend.name }}</h2>
+      </ion-label>
+      <ion-button (click)="removeFriend(friend.authorId)" expand="full" color="danger" fill="clear" slot="end">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 
-  <ion-grid *ngIf="pendingFriends && pendingFriends.length > 0">
-    <ion-row>
-      <ion-col>Friend requests</ion-col>
-    </ion-row>
-    <ion-row *ngFor="let pendingFriend of pendingFriends" class="ion-align-items-center">
-      <ion-col size="8">
-        {{ pendingFriend.name }}
-      </ion-col>
-      <ion-col size="2">
+  <ion-list *ngIf="pendingFriends && pendingFriends.length > 0">
+    <ion-list-header>Friend requests</ion-list-header>
+    <ion-item *ngFor="let pendingFriend of pendingFriends">
+      <ion-label>
+        <h2>{{ pendingFriend.name }}</h2>
+      </ion-label>
+      <ion-buttons slot="end">
         <ion-button (click)="denyFriendRequest(pendingFriend.authorId)" expand="full" color="danger" fill="clear">
           <ion-icon name="close-outline"></ion-icon>
         </ion-button>
-      </ion-col>
-      <ion-col size="2">
         <ion-button (click)="confirmFriendRequest(pendingFriend.authorId)" expand="full" color="success" fill="clear">
           <ion-icon name="checkmark-outline"></ion-icon>
         </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 
-  <ion-grid *ngIf="addFriendUrl">
-    <ion-row>
-      <ion-col>
-        To make friends copy this url and send it to a friend!
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-center">
-      <ion-col size="10">
-        {{ this.addFriendUrl }}
-      </ion-col>
-      <ion-col size="2">
-        <ion-button (click)="copyFriendLinkUrl()" expand="full" fill="clear">
-          <ion-icon name="copy-outline"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list *ngIf="addFriendUrl">
+    <ion-list-header>Make friends</ion-list-header>
+    <ion-item>
+      <ion-label>
+        <p>To make friends copy this url and send it to a friend!</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>{{ this.addFriendUrl }}</p>
+      </ion-label>
+      <ion-button (click)="copyFriendLinkUrl()" expand="full" fill="clear" slot="end">
+        <ion-icon name="copy-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 
-  <ion-button (click)="logout()">Logout</ion-button>
 </ion-content>

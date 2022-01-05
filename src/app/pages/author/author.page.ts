@@ -16,7 +16,7 @@ export class AuthorPage implements OnInit {
   pendingFriends?: Author[];
   addFriendUrl?: string;
 
-  constructor(public authorService: AuthorService,
+  constructor(private authorService: AuthorService,
               private userService: UserService,
               private router: Router) {
   }
