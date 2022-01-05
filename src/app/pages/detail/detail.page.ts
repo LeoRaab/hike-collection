@@ -25,16 +25,15 @@ export class DetailPage implements OnInit {
     private loggerService: LoggerService,
     private messageService: MessageService,
     private modalController: ModalController,
-    private shareService: ShareService
   ) {
+  }
+
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.hikeId = params.id;
       this.hikeService.getHike(this.hikeId)
         .subscribe(hike => this.hike = hike);
     });
-  }
-
-  ngOnInit(): void {
   }
 
   async shareHike() {
