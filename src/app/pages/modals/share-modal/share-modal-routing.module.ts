@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ShareUserModalPage } from './share-user-modal.page';
+import { ShareModalPage } from './share-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ShareUserModalPage
+    component: ShareModalPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ShareUserModalPageRoutingModule {}
+export class ShareModalPageRoutingModule {}

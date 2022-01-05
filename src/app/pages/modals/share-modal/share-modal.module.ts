@@ -4,17 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ImportPageRoutingModule } from './import-routing.module';
+import { ShareModalPageRoutingModule } from './share-modal-routing.module';
 
-import { ImportPage } from './import.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ImportPageRoutingModule
-  ],
-  declarations: [ImportPage]
+    ShareModalPageRoutingModule
+  ]
 })
-export class ImportPageModule {}
+export class ShareModalPageModule {}

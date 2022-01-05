@@ -16,11 +16,12 @@ import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAnalyticsModule} from '@angular/fire/compat/analytics';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {FilterModalPage} from './pages/modals/filter-modal/filter-modal.page';
 import {CoreModule} from './core/core.module';
 import {MenuComponent} from './core/components/menu/menu.component';
 import {AppInitService} from './core/services/app-init.service';
+import {ShareModalPage} from './pages/modals/share-modal/share-modal.page';
 
 export const initApp = (appInitService: AppInitService) => async () => {
   await appInitService.init();
@@ -33,6 +34,7 @@ export const initApp = (appInitService: AppInitService) => async () => {
     AppComponent,
     PictureModalPage,
     FilterModalPage,
+    ShareModalPage,
     MenuComponent
   ],
   entryComponents: [],
@@ -48,7 +50,6 @@ export const initApp = (appInitService: AppInitService) => async () => {
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    ReactiveFormsModule,
     CoreModule
   ],
   providers: [

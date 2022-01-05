@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ImportPage } from './import.page';
+import { ShareModalPage } from './share-modal.page';
 
-describe('ImportPage', () => {
-  let component: ImportPage;
-  let fixture: ComponentFixture<ImportPage>;
+describe('ShareUserModalPage', () => {
+  let component: ShareModalPage;
+  let fixture: ComponentFixture<ShareModalPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImportPage ],
+      declarations: [ ShareModalPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ImportPage);
+    fixture = TestBed.createComponent(ShareModalPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

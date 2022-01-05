@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Share hike with friend</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="friends">
+    <form (ngSubmit)="share(form)" #form="ngForm">
+      <ion-list-header>Friends</ion-list-header>
+      <ion-item *ngFor="let friend of friends">
+        <ion-checkbox slot="start" color="tertiary" [id]="friend.authorId"></ion-checkbox>
+        <ion-label>{{ friend.name }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-button type="submit" color="success">
+          share
+        </ion-button>
+      </ion-item>
+    </form>
+  </ion-list>
+
+</ion-content>

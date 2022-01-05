@@ -5,7 +5,7 @@ import Hike from '../../core/models/hike.model';
 import {LoggerService} from '../../core/services/logger.service';
 import {ModalController, Platform} from '@ionic/angular';
 import {MessageService} from '../../core/services/message.service';
-import {ShareUserModalPage} from '../modals/share-user-modal/share-user-modal.page';
+import {ShareModalPage} from '../modals/share-modal/share-modal.page';
 import {ShareService} from '../../core/services/share.service';
 
 @Component({
@@ -54,7 +54,7 @@ export class DetailPage implements OnInit {
 
     if (shareRole === 'share') {
       const shareUserModal = await this.modalController.create({
-        component: ShareUserModalPage
+        component: ShareModalPage
       });
       await shareUserModal.present();
       this.loggerService.debug('Share hike');
