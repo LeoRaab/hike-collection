@@ -15,12 +15,12 @@ export class RegisterPage {
   author: Author = {
     authorId: '',
     name: '',
+    email: '',
     friendsList: [],
     pendingFriendsList: [],
     avatar: ''
   };
 
-  email: string;
   password: string;
 
   constructor(private userService: UserService,
@@ -30,7 +30,7 @@ export class RegisterPage {
   }
 
   register() {
-    this.userService.registerUser(this.email, this.password)
+    this.userService.registerUser(this.author.email, this.password)
       .then((user) => {
         this.author.authorId = user.uid;
         this.authorService.addAuthor(this.author);
