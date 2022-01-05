@@ -1,7 +1,7 @@
 /**
  * TODO: Filter kapseln, verbessern
  */
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HikeService} from '../../core/services/hike.service';
 import {LoggerService} from '../../core/services/logger.service';
 import {IonContent, ModalController} from '@ionic/angular';
@@ -16,12 +16,12 @@ import {ConfigService} from '../../core/services/config.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   @ViewChild('ionContent') ionContent: IonContent;
 
   searchTerm = '';
   distanceToTop = 0;
-  hikeCollection: Hike[] | undefined;
+  hikeCollection?: Hike[];
   filterSettings = new FilterSettings();
 
   constructor(private hikeService: HikeService,
@@ -34,6 +34,13 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.configService.showLoadingSpinner();
     this.loadCollection();
+  }
+
+  ngOnDestroy() {
+    this.hikeCollection = undefined;
+    this.filterSettings = new FilterSettings();
+    this.distanceToTop = 0;
+    this.searchTerm = '';
   }
 
   loadCollection(event?) {
