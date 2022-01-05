@@ -34,7 +34,7 @@ export class ConfigService {
   }
 
   public setHikeCollectionPath(userId: string): void {
-    this.hikeCollectionPath = 'hikes/authors_' + userId + '/hikeCollection/';
+    this.hikeCollectionPath = 'hikes/author_' + userId + '/hikeCollection/';
   }
 
   public getHikeCollectionPath(): string {

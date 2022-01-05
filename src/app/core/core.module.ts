@@ -41,18 +41,19 @@ import { GetAuthorNamePipe } from './pipes/get-author-name.pipe';
     SwiperModule,
     ReactiveFormsModule
   ],
-  exports: [
-    HikeFormComponent,
-    HikeCollectionComponent,
-    FullAddressPipe,
-    CoordinatesPipe,
-    HikeDetailComponent,
-    PictureCollectionComponent,
-    FormatMeterPipe,
-    FormatDurationPipe,
-    FilterPipe,
-    SearchPipe
-  ],
+    exports: [
+        HikeFormComponent,
+        HikeCollectionComponent,
+        FullAddressPipe,
+        CoordinatesPipe,
+        HikeDetailComponent,
+        PictureCollectionComponent,
+        FormatMeterPipe,
+        FormatDurationPipe,
+        FilterPipe,
+        SearchPipe,
+        GetAuthorNamePipe
+    ],
   providers: [LoggerService]
 })
 export class CoreModule {

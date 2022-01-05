@@ -22,8 +22,8 @@ export class HikeService {
     return this.hikeRepository.read(hikeId);
   }
 
-  addHike(hike: Hike) {
-    this.hikeRepository.create(hike);
+  addHike(hike: Hike, customHikeCollectionPath?: string) {
+    this.hikeRepository.create(hike, customHikeCollectionPath);
   }
 
   editHike(hike: Hike) {

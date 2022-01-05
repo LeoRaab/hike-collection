@@ -15,8 +15,8 @@ import {ShareService} from '../../core/services/share.service';
 })
 export class DetailPage implements OnInit {
 
-  hikeId: string | undefined;
-  hike: Hike | undefined;
+  hikeId?: string;
+  hike?: Hike;
 
   constructor(
     public platform: Platform,
@@ -54,7 +54,10 @@ export class DetailPage implements OnInit {
 
     if (shareRole === 'share') {
       const shareUserModal = await this.modalController.create({
-        component: ShareModalPage
+        component: ShareModalPage,
+        componentProps: {
+          hike: this.hike
+        }
       });
       await shareUserModal.present();
       this.loggerService.debug('Share hike');

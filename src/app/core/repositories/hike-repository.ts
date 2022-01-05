@@ -18,8 +18,8 @@ export default class HikeRepository {
               private loggerService: LoggerService) {
   }
 
-  create(hike: Hike): void {
-    this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hike.hikeId).set(hike)
+  create(hike: Hike, hikeCollectionPath: string = this.configService.getHikeCollectionPath()): void {
+    this.fireStore.doc<Hike>(hikeCollectionPath + hike.hikeId).set(hike)
       .then(() => this.loggerService.debug('Hike added!'))
       .catch(error => this.loggerService.error('Adding hike failed! ' + error));
   }

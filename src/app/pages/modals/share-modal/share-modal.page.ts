@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {AuthorService} from '../../../core/services/author.service';
 import Author from '../../../core/models/author.model';
-import {NgForm} from '@angular/forms';
+import {FormBuilder, NgForm, FormArray} from '@angular/forms';
+import {HikeService} from '../../../core/services/hike.service';
+import Hike from '../../../core/models/hike.model';
 
 @Component({
   selector: 'app-share-modal',
@@ -11,20 +13,62 @@ import {NgForm} from '@angular/forms';
 })
 export class ShareModalPage implements OnInit {
 
+  @Input() hike: Hike;
+
+  friendsList?: string[];
   friends?: Author[];
 
-  constructor(private modalController: ModalController,
-              private authorService: AuthorService) { }
+  shareForm = this.formBuilder.group({
+    friendsSelection: this.formBuilder.array([])
+  });
 
-  ngOnInit() {
-    this.friends = this.authorService.getFriends(this.authorService.getAuthor().friendsList);
+  constructor(private modalController: ModalController,
+              private authorService: AuthorService,
+              private hikeService: HikeService,
+              private formBuilder: FormBuilder) {
   }
 
-  dismissModal() {
+  get friendsSelection() {
+    return this.shareForm.get('friendsSelection') as FormArray;
+  }
+
+  ngOnInit() {
+    this.friendsList = this.authorService.getAuthor().friendsList;
+
+    //fill formArray with controls
+    for (const friend of this.friendsList) {
+      this.addFriendToSelect();
+    }
+
+    //fetch Author[] to display infos of friends
+    this.friends = this.authorService.getFriends(this.friendsList);
+  }
+
+  public addFriendToSelect() {
+    this.friendsSelection.push(this.formBuilder.control(false));
+  }
+
+  public share() {
+    const selectedFriends = this.getSelectedFriends();
+
+    for (const selectedFriend of selectedFriends) {
+      this.hikeService.addHike(this.hike, 'hikes/author_' + selectedFriend + '/hikeCollection/');
+    }
+  }
+
+  public dismissModal() {
     this.modalController.dismiss();
   }
 
-  share(form: NgForm) {
-    console.log(form);
+  private getSelectedFriends(): Author[] {
+    const selectedFriends = [];
+
+    for (const i in this.friendsSelection.controls) {
+      if (this.friendsSelection.controls[i].value === true) {
+        selectedFriends.push(this.friendsList[i]);
+      }
+    }
+
+    return selectedFriends;
   }
 }
