@@ -41,13 +41,9 @@ export class DetailPage implements OnInit {
 
     const buttons = [
       {
-        text: 'Share hike',
+        text: 'Share hike with friends',
         icon: 'people-outline',
-        role: 'send'
-      },{
-        text: 'Export Hike',
-        icon: 'download-outline',
-        role: 'export'
+        role: 'share'
       }, {
         text: 'Cancel',
         icon: 'close-outline',
@@ -57,20 +53,14 @@ export class DetailPage implements OnInit {
 
     const shareRole = await this.messageService.showActionSheet('Share hike', buttons);
 
-    switch (shareRole) {
-      case 'share':
-        const shareUserModal = await this.modalController.create({
-          component: ShareUserModalPage
-        });
-        await shareUserModal.present();
-        break;
-      case 'export':
-        this.shareService.exportHike(this.hike);
-        break;
-      case 'cancel':
-      default:
-        this.loggerService.debug('Share cancelled');
-        break;
+    if (shareRole === 'share') {
+      const shareUserModal = await this.modalController.create({
+        component: ShareUserModalPage
+      });
+      await shareUserModal.present();
+      this.loggerService.debug('Share hike');
+    } else {
+      this.loggerService.debug('Share cancelled');
     }
   }
 }
