@@ -9,19 +9,39 @@ import {LoggerService} from './logger.service';
 })
 export class AuthorService {
 
+  private author?: Author;
+
   constructor(private authorRepository: AuthorRepository,
               private loggerService: LoggerService) {
   }
 
-  public getAuthor(userId: string): Observable<Author> {
-    return this.authorRepository.read(userId);
+  public setAuthor(userId: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.authorRepository.read(userId)
+        .subscribe((author) => {
+          this.author = author;
+          if (this.author !== null && this.author !== undefined) {
+            resolve();
+          } else {
+            reject();
+          }
+        });
+    });
   }
 
-  public getFriends(author: Author, friendsList: string[]): Author[] {
+  public getAuthor(): Author {
+    return this.author;
+  }
+
+  public getAuthorById(id: string): Observable<Author> {
+    return this.authorRepository.read(id);
+  }
+
+  public getFriends(friendsList: string[]): Author[] {
     const friends = [];
 
     for (const friendId of friendsList) {
-      this.getAuthor(friendId).subscribe(friend => friends.push(friend));
+      this.getAuthorById(friendId).subscribe(friend => friends.push(friend));
     }
 
     return friends;
@@ -31,36 +51,37 @@ export class AuthorService {
     this.authorRepository.create(author);
   }
 
-  public addToFriendsList(author: Author, friendId: string): void {
+  public addToFriendsList(friendId: string): void {
     //Remove friend from pendingFriendsList
-    author.pendingFriendsList = author.pendingFriendsList.filter(pendingFriend => pendingFriend !== friendId);
+    this.author.pendingFriendsList = this.author.pendingFriendsList.filter(pendingFriend => pendingFriend !== friendId);
 
-    author.friendsList.push(friendId);
-    this.authorRepository.update(author);
+    this.author.friendsList.push(friendId);
+    this.authorRepository.update(this.author);
   }
 
-  public addFriendToPending(author: Author, friendId: string): void {
-    const isInPendingFriendsList = author.pendingFriendsList.find(pendingFriend => pendingFriend === friendId);
-    const isInFriendsList = author.friendsList.find(friend => friend === friendId);
+  public addFriendToPending(friendId: string): void {
+    console.log(this.author);
+    const isInPendingFriendsList = this.author.pendingFriendsList.find(pendingFriend => pendingFriend === friendId);
+    const isInFriendsList = this.author.friendsList.find(friend => friend === friendId);
 
     if (!isInPendingFriendsList && !isInFriendsList) {
-      author.pendingFriendsList.push(friendId);
-      this.authorRepository.update(author);
+      this.author.pendingFriendsList.push(friendId);
+      this.authorRepository.update(this.author);
       this.loggerService.debug('Friend with id ' + friendId + ' added to pending-friends-list!');
     } else {
       this.loggerService.info('Friend already in list - not added');
     }
   }
 
-  public removeFromFriendList(author: Author, friendId: string): void {
+  public removeFromFriendList(friendId: string): void {
     //Remove friend from friendsList
-    author.friendsList = author.friendsList.filter(friend => friend !== friendId);
-    this.authorRepository.update(author);
+    this.author.friendsList = this.author.friendsList.filter(friend => friend !== friendId);
+    this.authorRepository.update(this.author);
   }
 
-  public removeFromPendingFriendsList(author: Author, friendId: string): void {
-    author.pendingFriendsList = author.pendingFriendsList.filter(pendingFriend => pendingFriend !== friendId);
-    this.authorRepository.update(author);
+  public removeFromPendingFriendsList(friendId: string): void {
+    this.author.pendingFriendsList = this.author.pendingFriendsList.filter(pendingFriend => pendingFriend !== friendId);
+    this.authorRepository.update(this.author);
   }
 
 }

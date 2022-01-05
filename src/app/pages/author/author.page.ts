@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import Author from '../../core/models/author.model';
 import {UserService} from '../../core/services/user.service';
@@ -10,7 +10,7 @@ import { Clipboard } from '@capacitor/clipboard';
   templateUrl: './author.page.html',
   styleUrls: ['./author.page.scss'],
 })
-export class AuthorPage implements OnInit {
+export class AuthorPage implements OnInit, OnDestroy {
   author?: Author;
   friends?: Author[];
   pendingFriends?: Author[];
@@ -22,28 +22,32 @@ export class AuthorPage implements OnInit {
   }
 
   ngOnInit() {
-    this.authorService.getAuthor(this.userService.getUserId())
-      .subscribe(author => {
-        this.author = author;
-        this.friends = this.authorService.getFriends(this.author, this.author.friendsList);
-        this.pendingFriends = this.authorService.getFriends(this.author, this.author.pendingFriendsList);
-        /**
-         * TODO: put Url in config
-         */
-        this.addFriendUrl = 'http://localhost:4200/author/friend/add/' + this.author.authorId;
-      });
+    this.author = this.authorService.getAuthor();
+    this.friends = this.authorService.getFriends(this.author.friendsList);
+    this.pendingFriends = this.authorService.getFriends(this.author.pendingFriendsList);
+    /**
+     * TODO: put Url in config
+     */
+    this.addFriendUrl = 'http://localhost:4200/author/friend/add/' + this.author.authorId;
+  }
+
+  ngOnDestroy() {
+    this.author = undefined;
+    this.friends = undefined;
+    this.pendingFriends = undefined;
+    this.addFriendUrl = undefined;
   }
 
   public confirmFriendRequest(friendId: string): void {
-    this.authorService.addToFriendsList(this.author, friendId);
+    this.authorService.addToFriendsList(friendId);
   }
 
   public denyFriendRequest(friendId: string) {
-    this.authorService.removeFromPendingFriendsList(this.author, friendId);
+    this.authorService.removeFromPendingFriendsList(friendId);
   }
 
   public removeFriend(friendId: string): void {
-    this.authorService.removeFromFriendList(this.author, friendId);
+    this.authorService.removeFromFriendList(friendId);
   }
 
   public async copyFriendLinkUrl() {

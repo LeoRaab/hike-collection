@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import Hike from '../../models/hike.model';
 import {LoggerService} from '../../services/logger.service';
 import {ModalController} from '@ionic/angular';
@@ -7,6 +7,7 @@ import {HikeService} from '../../services/hike.service';
 import {ConfigService} from '../../services/config.service';
 import {CameraSource} from '@capacitor/camera';
 import {PictureService} from '../../services/picture.service';
+import {AuthorService} from '../../services/author.service';
 
 @Component({
   selector: 'app-hike-form',
@@ -18,6 +19,7 @@ export class HikeFormComponent {
 
   @Input() hike: Hike = {
     hikeId: this.hikeService.generateHikeId(),
+    author: this.authorService.getAuthor(),
     title: '',
     shortDescription: '',
     longDescription: '',
@@ -47,7 +49,8 @@ export class HikeFormComponent {
     private configService: ConfigService,
     private modalController: ModalController,
     private loggerService: LoggerService,
-    private pictureService: PictureService
+    private pictureService: PictureService,
+    private authorService: AuthorService
   ) {
   }
 

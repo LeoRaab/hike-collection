@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {LoggerService} from './logger.service';
 import {ConfigService} from './config.service';
 import {UserService} from './user.service';
+import {AuthorService} from './author.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class AppInitService {
 
   constructor(private configService: ConfigService,
               private loggerService: LoggerService,
-              private userService: UserService) {
+              private userService: UserService,
+              private authorService: AuthorService) {
   }
 
   public init(): Promise<void> {
@@ -28,9 +30,11 @@ export class AppInitService {
         });
 
       await this.userService.setUser()
-        .then((user) => {
+        .then(async (user) => {
           this.configService.setHikeCollectionPath(this.userService.getUserId());
+          await this.authorService.setAuthor(user.uid);
           this.loggerService.debug('Setting user with id: ' + user.uid);
+          this.loggerService.debug('Setting author with name: ' + this.authorService.getAuthor().name);
         })
         .catch(() => {
           this.loggerService.error('Setting user failed');

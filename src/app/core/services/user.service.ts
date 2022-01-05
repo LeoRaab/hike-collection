@@ -5,6 +5,7 @@ import firebase from 'firebase/compat';
 import User = firebase.User;
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {ConfigService} from './config.service';
+import {AuthorService} from './author.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class UserService {
   constructor(private fireStore: AngularFirestore,
               private auth: AngularFireAuth,
               private configService: ConfigService,
-              private loggerService: LoggerService) {
+              private loggerService: LoggerService,
+              private authorService: AuthorService) {
   }
 
   public setUser(): Promise<User | null> {

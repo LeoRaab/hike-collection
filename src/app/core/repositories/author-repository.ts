@@ -16,7 +16,6 @@ export default class AuthorRepository {
   private authorPath = 'authors/';
 
   constructor(private fireStore: AngularFirestore,
-              private userService: UserService,
               private loggerService: LoggerService) {
   }
 

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../../core/services/user.service';
+import {AppInitService} from '../../core/services/app-init.service';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,14 @@ export class LoginPage {
   password: string;
 
   constructor(private router: Router,
+              private appInitService: AppInitService,
               private userService: UserService) {
   }
 
   async login() {
     await this.userService.loginUser(this.email, this.password)
       .then(async () => {
-        await this.userService.setUser();
+        await this.appInitService.init();
         this.router.navigate(['/']);
       });
   }
