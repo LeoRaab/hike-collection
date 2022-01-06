@@ -28,7 +28,7 @@ export class AuthorPage implements OnInit, OnDestroy {
     /**
      * TODO: put Url in config
      */
-    this.addFriendUrl = 'http://localhost:4200/author/friend/add/' + this.author.authorId;
+    this.addFriendUrl = 'https://www.the-hairmanufacture.at/hike-collection/author/friend/add/' + this.author.authorId;
   }
 
   ngOnDestroy() {
