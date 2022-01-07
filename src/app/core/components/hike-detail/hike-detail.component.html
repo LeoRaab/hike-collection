@@ -29,24 +29,15 @@
   </ion-row>
 </ion-grid>
 
-<ion-grid class="ion-margin-vertical">
-  <ion-row>
-    <ion-col size="2" class="ion-align-items-center">
-      <ion-icon name="navigate-circle-outline" class="bigger-icon"></ion-icon>
-    </ion-col>
-    <ion-col>
-      {{ hike.location.address | fullAddress }}
-    </ion-col>
-  </ion-row>
+<ion-list>
+  <ion-item>
+    <ion-icon name="navigate-circle-outline" class="bigger-icon"></ion-icon>
+    <ion-label class="ion-text-wrap">{{ hike.location.address | fullAddress }}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-icon name="compass-outline" class="bigger-icon"></ion-icon>
+    <ion-label>{{ hike.location.coordinates | coordinates }}</ion-label>
+  </ion-item>
+</ion-list>
 
-  <ion-row>
-    <ion-col size="2" class="ion-align-items-center ion-align-self-center">
-      <ion-icon name="compass-outline" class="bigger-icon"></ion-icon>
-    </ion-col>
-    <ion-col class="ion-align-self-center">
-      {{ hike.location.coordinates | coordinates }}
-    </ion-col>
-  </ion-row>
-</ion-grid>
-
-<p class="line-breaks"> {{ hike.longDescription }}</p>
+<ion-text> {{ hike.longDescription }}</ion-text>
