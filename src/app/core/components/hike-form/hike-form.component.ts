@@ -9,6 +9,7 @@ import {CameraSource} from '@capacitor/camera';
 import {PictureService} from '../../services/picture.service';
 import {AuthorService} from '../../services/author.service';
 import {LoadingSpinnerService} from '../../services/loading-spinner.service';
+import {MessageService} from '../../services/message.service';
 
 @Component({
   selector: 'app-hike-form',
@@ -52,7 +53,8 @@ export class HikeFormComponent {
     private loggerService: LoggerService,
     private loadingSpinnerService: LoadingSpinnerService,
     private pictureService: PictureService,
-    private authorService: AuthorService
+    private authorService: AuthorService,
+    private messageService: MessageService
   ) {
   }
 
@@ -83,6 +85,7 @@ export class HikeFormComponent {
           .then((filePath) => {
             this.updatePictureCollection(filePath);
             this.loadingSpinnerService.hide();
+            this.messageService.showToast('Picture added!', 'success');
             this.loggerService.debug('Picture uploaded!');
           })
           .catch((e) => {

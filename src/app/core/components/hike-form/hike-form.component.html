@@ -22,38 +22,37 @@
     <ion-list>
       <ion-list-header>Location</ion-list-header>
       <ion-item>
+        <ion-icon name="navigate-circle-outline" slot="start"></ion-icon>
         <ion-label position="stacked">Street</ion-label>
         <ion-input type="text" name="street" [(ngModel)]="hike.location.address.street" minlength="3"
                    required="true"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-icon name="navigate-circle-outline" slot="start"></ion-icon>
         <ion-label position="stacked">ZIP</ion-label>
         <ion-input type="number" name="zip" [(ngModel)]="hike.location.address.zip" min="1000" max="9999"
                    required="true"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-icon name="navigate-circle-outline" slot="start"></ion-icon>
         <ion-label position="stacked">City</ion-label>
         <ion-input type="text" name="city" [(ngModel)]="hike.location.address.city" minlength="2"
                    required="true"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-label position="stacked">Latitude</ion-label>
-              <ion-input type="number" name="latitude" [(ngModel)]="hike.location.coordinates.latitude" min="-90"
-                         max="90"
-                         required="true"></ion-input>
-            </ion-col>
-            <ion-col>
-              <ion-label position="stacked">Longitude</ion-label>
-              <ion-input type="number" name="longitude" [(ngModel)]="hike.location.coordinates.longitude" min="-180"
-                         max="180"
-                         required="true"></ion-input>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <ion-icon name="compass-outline" slot="start"></ion-icon>
+        <ion-label position="stacked">Latitude</ion-label>
+        <ion-input type="number" name="latitude" [(ngModel)]="hike.location.coordinates.latitude" min="-90"
+                   max="90"
+                   required="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="compass-outline" slot="start"></ion-icon>
+        <ion-label position="stacked">Longitude</ion-label>
+        <ion-input type="number" name="longitude" [(ngModel)]="hike.location.coordinates.longitude" min="-180"
+                   max="180"
+                   required="true"></ion-input>
       </ion-item>
 
     </ion-list>
@@ -61,17 +60,20 @@
     <ion-list>
       <ion-list-header>Hike Stats</ion-list-header>
       <ion-item>
+        <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
         <ion-label position="stacked">Duration (min)</ion-label>
         <ion-input type="number" name="duration" [(ngModel)]="hike.stats.duration" min="1" max="4320"
                    required="true"></ion-input>
       </ion-item>
 
       <ion-item>
+        <ion-icon name="trending-down-outline" slot="start"></ion-icon>
         <ion-label position="stacked">Lowest Point (m)</ion-label>
         <ion-input type="number" name="lowestPoint" [(ngModel)]="hike.stats.lowestPoint" min="0" max="9000"
                    required="true"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-icon name="trending-up-outline" slot="start"></ion-icon>
         <ion-label position="stacked">Highest Point (m)</ion-label>
         <ion-input type="number" name="highestPoint" [(ngModel)]="hike.stats.highestPoint" min="1" max="9000"
                    required="true"></ion-input>
