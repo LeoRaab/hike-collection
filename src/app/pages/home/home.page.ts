@@ -7,6 +7,7 @@ import Hike from '../../core/models/hike.model';
 import {FilterSettings} from '../../core/models/filter-settings.model';
 import {UserService} from '../../core/services/user.service';
 import {ConfigService} from '../../core/services/config.service';
+import {LoadingSpinnerService} from '../../core/services/loading-spinner.service';
 
 @Component({
   selector: 'app-home',
@@ -24,12 +25,13 @@ export class HomePage implements OnInit, OnDestroy {
   constructor(private hikeService: HikeService,
               private userService: UserService,
               private configService: ConfigService,
+              private loadingSpinnerService: LoadingSpinnerService,
               private loggerService: LoggerService,
               private modalController: ModalController) {
   }
 
   ngOnInit() {
-    this.configService.showLoadingSpinner();
+    this.loadingSpinnerService.show();
     this.loadCollection();
   }
 
@@ -47,7 +49,7 @@ export class HomePage implements OnInit, OnDestroy {
         if (event) {
           event.target.complete();
         }
-        this.configService.hideLoadingSpinner();
+        this.loadingSpinnerService.hide();
       });
   }
 

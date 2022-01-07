@@ -8,6 +8,7 @@ import {ConfigService} from '../../services/config.service';
 import {CameraSource} from '@capacitor/camera';
 import {PictureService} from '../../services/picture.service';
 import {AuthorService} from '../../services/author.service';
+import {LoadingSpinnerService} from '../../services/loading-spinner.service';
 
 @Component({
   selector: 'app-hike-form',
@@ -49,6 +50,7 @@ export class HikeFormComponent {
     private configService: ConfigService,
     private modalController: ModalController,
     private loggerService: LoggerService,
+    private loadingSpinnerService: LoadingSpinnerService,
     private pictureService: PictureService,
     private authorService: AuthorService
   ) {
@@ -74,22 +76,22 @@ export class HikeFormComponent {
   }
 
   public addPicture(cameraSource: CameraSource): void {
-    this.configService.showLoadingSpinner();
+    this.loadingSpinnerService.show();
     this.pictureService.getPicture(cameraSource)
       .then((photo) => {
         this.pictureService.uploadPicture(photo, this.hike.hikeId)
           .then((filePath) => {
             this.updatePictureCollection(filePath);
-            this.configService.hideLoadingSpinner();
+            this.loadingSpinnerService.hide();
             this.loggerService.debug('Picture uploaded!');
           })
           .catch((e) => {
-            this.configService.hideLoadingSpinner();
+            this.loadingSpinnerService.hide();
             this.loggerService.error('Uploading picture failed!');
           });
       })
       .catch(() => {
-        this.configService.hideLoadingSpinner();
+        this.loadingSpinnerService.hide();
         this.loggerService.error('Getting picture failed!');
       });
   }

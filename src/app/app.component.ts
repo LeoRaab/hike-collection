@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from './core/services/user.service';
 import {MenuController} from '@ionic/angular';
 import {ConfigService} from './core/services/config.service';
+import {LoadingSpinnerService} from './core/services/loading-spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import {ConfigService} from './core/services/config.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(public configService: ConfigService,
+  constructor(public loadingSpinnerService: LoadingSpinnerService,
+              private configService: ConfigService,
               private userService: UserService,
               private menu: MenuController) {
   }

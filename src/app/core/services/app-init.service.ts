@@ -3,6 +3,7 @@ import {LoggerService} from './logger.service';
 import {ConfigService} from './config.service';
 import {UserService} from './user.service';
 import {AuthorService} from './author.service';
+import {LoadingSpinnerService} from './loading-spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,12 @@ export class AppInitService {
   constructor(private configService: ConfigService,
               private loggerService: LoggerService,
               private userService: UserService,
+              private loadingSpinnerService: LoadingSpinnerService,
               private authorService: AuthorService) {
   }
 
   public init(): Promise<void> {
+    this.loadingSpinnerService.show();
 
     return new Promise<void>(async (resolve) => {
       this.loggerService.debug('Starting app init');
@@ -41,6 +44,7 @@ export class AppInitService {
         });
 
       this.loggerService.debug('App init finished');
+      this.loadingSpinnerService.hide();
       resolve();
     });
   }

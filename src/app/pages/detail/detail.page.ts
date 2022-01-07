@@ -7,6 +7,7 @@ import {ModalController, Platform} from '@ionic/angular';
 import {MessageService} from '../../core/services/message.service';
 import {ShareModalPage} from '../modals/share-modal/share-modal.page';
 import {ShareService} from '../../core/services/share.service';
+import {LoadingSpinnerService} from '../../core/services/loading-spinner.service';
 
 @Component({
   selector: 'app-detail',
@@ -24,15 +25,21 @@ export class DetailPage implements OnInit {
     private hikeService: HikeService,
     private loggerService: LoggerService,
     private messageService: MessageService,
+    private loadingSpinnerService: LoadingSpinnerService,
     private modalController: ModalController,
   ) {
   }
 
   ngOnInit(): void {
+    this.loadingSpinnerService.show();
+
     this.route.params.subscribe(params => {
       this.hikeId = params.id;
       this.hikeService.getHike(this.hikeId)
-        .subscribe(hike => this.hike = hike);
+        .subscribe(hike => {
+          this.hike = hike;
+          this.loadingSpinnerService.hide();
+        });
     });
   }
 

@@ -7,12 +7,10 @@ import {LoggerService} from './logger.service';
 })
 export class ConfigService {
 
-  public isLoading = false;
   private config;
   private hikeCollectionPath: string;
 
-  constructor(private remoteConfig: AngularFireRemoteConfig,
-              private loggerService: LoggerService) {
+  constructor(private remoteConfig: AngularFireRemoteConfig) {
   }
 
   public fetchRemoteConfig(): Promise<void> {
@@ -49,12 +47,5 @@ export class ConfigService {
     return this.hikeCollectionPath;
   }
 
-  public showLoadingSpinner(): void {
-    this.isLoading = true;
-  }
-
-  public hideLoadingSpinner(): void {
-    this.isLoading = false;
-  }
 
 }
