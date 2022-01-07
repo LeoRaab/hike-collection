@@ -8,7 +8,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FullAddressPipe} from './pipes/full-address.pipe';
 import {CoordinatesPipe} from './pipes/coordinates.pipe';
-import {HikeDetailComponent} from './components/hike-detail/hike-detail.component';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {PictureCollectionComponent} from './components/picture-collection/picture-collection.component';
 import {SwiperModule} from 'swiper/angular';
@@ -16,7 +15,6 @@ import {FormatMeterPipe} from './pipes/format-meter.pipe';
 import {FormatDurationPipe} from './pipes/format-duration.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
 import {SearchPipe} from './pipes/search.pipe';
-import { GetAuthorNamePipe } from './pipes/get-author-name.pipe';
 
 @NgModule({
   declarations: [
@@ -24,13 +22,11 @@ import { GetAuthorNamePipe } from './pipes/get-author-name.pipe';
     HikeFormComponent,
     FullAddressPipe,
     CoordinatesPipe,
-    HikeDetailComponent,
     PictureCollectionComponent,
     FormatMeterPipe,
     FormatDurationPipe,
     FilterPipe,
-    SearchPipe,
-    GetAuthorNamePipe
+    SearchPipe
   ],
   imports: [
     CommonModule,
@@ -41,19 +37,17 @@ import { GetAuthorNamePipe } from './pipes/get-author-name.pipe';
     SwiperModule,
     ReactiveFormsModule
   ],
-    exports: [
-        HikeFormComponent,
-        HikeCollectionComponent,
-        FullAddressPipe,
-        CoordinatesPipe,
-        HikeDetailComponent,
-        PictureCollectionComponent,
-        FormatMeterPipe,
-        FormatDurationPipe,
-        FilterPipe,
-        SearchPipe,
-        GetAuthorNamePipe
-    ],
+  exports: [
+    HikeFormComponent,
+    HikeCollectionComponent,
+    FullAddressPipe,
+    CoordinatesPipe,
+    PictureCollectionComponent,
+    FormatMeterPipe,
+    FormatDurationPipe,
+    FilterPipe,
+    SearchPipe
+  ],
   providers: [LoggerService]
 })
 export class CoreModule {
