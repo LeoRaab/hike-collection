@@ -4,6 +4,7 @@ import {AuthorService} from '../../core/services/author.service';
 import {UserService} from '../../core/services/user.service';
 import {LoggerService} from '../../core/services/logger.service';
 import {Router} from '@angular/router';
+import {MessageService} from '../../core/services/message.service';
 
 @Component({
   selector: 'app-register',
@@ -26,10 +27,21 @@ export class RegisterPage {
   constructor(private userService: UserService,
               private authorService: AuthorService,
               private router: Router,
+              private messageService: MessageService,
               private loggerService: LoggerService) {
   }
 
-  register() {
+  public async register(): Promise<void> {
+    const isAuthorNameUsed = await this.isAuthorNameUsed();
+
+    if (isAuthorNameUsed) {
+      this.messageService.showToast('Name is already in use, choose another one!', 'warning');
+    } else {
+      this.registerUser();
+    }
+  }
+
+  private registerUser(): void {
     this.userService.registerUser(this.author.email, this.password)
       .then((user) => {
         this.author.authorId = user.uid;
@@ -41,15 +53,26 @@ export class RegisterPage {
             this.loggerService.debug('Sent email verification link!');
           })
           .catch(() => {
-            /**
-             * TODO: Display error
-             */
             this.loggerService.error('Sending email verification link failed!');
           });
       })
       .catch(() => {
         this.loggerService.error('Register user failed!');
+        this.messageService.showToast('Failed to register, please try again!', 'danger');
       });
+  }
+
+  private isAuthorNameUsed(): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      this.authorService.getAuthorByName(this.author.name)
+        .subscribe((authors) => {
+          if (authors.length > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+    });
   }
 
 }

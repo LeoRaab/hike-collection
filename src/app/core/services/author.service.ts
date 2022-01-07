@@ -43,6 +43,10 @@ export class AuthorService {
     return this.authorRepository.read(id);
   }
 
+  public getAuthorByName(name: string): Observable<Author[]> {
+    return this.authorRepository.readByName(name);
+  }
+
   public getFriends(friendsList: string[]): Author[] {
     const friends = [];
 

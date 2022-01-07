@@ -29,14 +29,16 @@ export default class AuthorRepository {
     return this.fireStore.doc<Author>(this.authorPath + userId).valueChanges();
   }
 
-  readAll(orderBy: string, orderByDirection: OrderByDirection): Observable<Author[]> {
+  readByName(name: string): Observable<Author[]> {
     return this.fireStore.collection<Author>(this.authorPath,
-        ref => ref.orderBy(orderBy, orderByDirection)).valueChanges();
+      ref => ref.where('name', '==', name)).valueChanges();
   }
 
-  /**
-   * TODO: How to retrieve userId
-   */
+  readAll(orderBy: string, orderByDirection: OrderByDirection): Observable<Author[]> {
+    return this.fireStore.collection<Author>(this.authorPath,
+      ref => ref.orderBy(orderBy, orderByDirection)).valueChanges();
+  }
+
   update(author: Author): void {
     this.fireStore.doc<Author>(this.authorPath + author.authorId).update(author)
       .then(() => this.loggerService.debug('Author with id: ' + author.authorId + ' updated!'))

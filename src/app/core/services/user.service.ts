@@ -70,13 +70,14 @@ export class UserService {
       });
   }
 
-  async registerUser(email: string, password: string): Promise<User | null> {
-    return new Promise<User | null>(async (resolve, reject) => {
+  async registerUser(email: string, password: string): Promise<User> {
+    return new Promise<User>(async (resolve, reject) => {
       await this.auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           resolve(userCredential.user);
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log(e);
           reject(null);
         });
     });
