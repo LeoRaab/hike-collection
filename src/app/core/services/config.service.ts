@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFireRemoteConfig} from '@angular/fire/compat/remote-config';
 import {LoggerService} from './logger.service';
-import {UserService} from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +28,17 @@ export class ConfigService {
     });
   }
 
+  public setDefaultConfig(): void {
+    this.config.isDarkModeEnabled = true;
+    this.config.hostUrl = 'https://hike-collection.web.app';
+  }
+
   public isDarkModeEnabled(): boolean {
-    return this.config?.isDarkModeEnabled ?? false;
+    return this.config.isDarkModeEnabled;
+  }
+
+  public getHostUrl(): string {
+    return this.config.hostUrl;
   }
 
   public setHikeCollectionPath(userId: string): void {
@@ -39,10 +47,6 @@ export class ConfigService {
 
   public getHikeCollectionPath(): string {
     return this.hikeCollectionPath;
-  }
-
-  public setDefaultConfig(): void {
-    this.config.isDarkModeEnabled = true;
   }
 
   public showLoadingSpinner(): void {

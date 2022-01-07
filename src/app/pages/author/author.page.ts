@@ -25,10 +25,7 @@ export class AuthorPage implements OnInit, OnDestroy {
     this.author = this.authorService.getAuthor();
     this.friends = this.authorService.getFriends(this.author.friendsList);
     this.pendingFriends = this.authorService.getFriends(this.author.pendingFriendsList);
-    /**
-     * TODO: put Url in config
-     */
-    this.addFriendUrl = 'https://hike-collection.web.app/author/friend/add/' + this.author.authorId;
+    this.addFriendUrl = this.authorService.getAddFriendUrl();
   }
 
   ngOnDestroy() {

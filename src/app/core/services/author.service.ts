@@ -3,6 +3,8 @@ import {Observable} from 'rxjs';
 import Author from '../models/author.model';
 import AuthorRepository from '../repositories/author-repository';
 import {LoggerService} from './logger.service';
+import {ConfigService} from './config.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,10 @@ import {LoggerService} from './logger.service';
 export class AuthorService {
 
   private author?: Author;
+  private addFriendUrl: string;
 
   constructor(private authorRepository: AuthorRepository,
+              private configService: ConfigService,
               private loggerService: LoggerService) {
   }
 
@@ -21,6 +25,8 @@ export class AuthorService {
         .subscribe((author) => {
           this.author = author;
           if (this.author !== null && this.author !== undefined) {
+            this.setAddFriendUrl();
+            console.log(this.getAddFriendUrl());
             resolve();
           } else {
             reject();
@@ -82,6 +88,14 @@ export class AuthorService {
   public removeFromPendingFriendsList(friendId: string): void {
     this.author.pendingFriendsList = this.author.pendingFriendsList.filter(pendingFriend => pendingFriend !== friendId);
     this.authorRepository.update(this.author);
+  }
+
+  public getAddFriendUrl(): string {
+    return this.addFriendUrl;
+  }
+
+  private setAddFriendUrl(): void {
+    this.addFriendUrl = this.configService.getHostUrl() + '/author/friend/add/' + this.author.authorId;
   }
 
 }
