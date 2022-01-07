@@ -62,7 +62,7 @@ export class HomePage implements OnInit, OnDestroy {
     await modal.present();
     const {data} = await modal.onWillDismiss();
 
-    if (data.filterSettings !== false) {
+    if (data.filterSettings !== false && data.filterSettings !== undefined) {
       this.filterSettings = data.filterSettings;
     }
 
