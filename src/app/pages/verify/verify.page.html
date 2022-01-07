@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>verify</ion-title>
+    <ion-title>Verify your email</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +11,13 @@
         <ion-img src="../../../assets/register.svg"></ion-img>
       </ion-col>
       <ion-col size="12">
-        <h4>Registration successful!</h4>
-        <p>We sent a mail to {{ userService.getEmail() }}. Please click the link to verify your account.</p>
+        <h4 class="ion-text-center">Registration successful!</h4>
+        <p class="ion-text-center">
+          We sent a mail to {{ userService.getEmail() }}. Please check your mails to verify your account.
+        </p>
+        <p class="ion-text-center">
+          <a [routerLink]="['/']">To Hike-collection</a>
+        </p>
       </ion-col>
     </ion-row>
   </ion-grid>
