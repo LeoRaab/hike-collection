@@ -12,8 +12,7 @@ export class SearchPipe implements PipeTransform {
       const filteredHikeCollection = [];
 
       for (const hike of hikeCollection) {
-        console.log(hike);
-        const filterFields = [hike.title, hike.location.address.city, hike.location.address.street];
+        const filterFields = [hike.title, hike.location.address.city, hike.location.address.street, hike.author.name];
         const matchedFields = filterFields.filter(filterField => filterField.toLowerCase().includes(filterTerm));
 
         if (matchedFields.length > 0) {
