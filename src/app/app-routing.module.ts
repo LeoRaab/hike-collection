@@ -57,7 +57,8 @@ const routes: Routes = [
   },
   {
     path: 'add-friend',
-    loadChildren: () => import('./pages/add-friend/add-friend.module').then( m => m.AddFriendPageModule)
+    loadChildren: () => import('./pages/add-friend/add-friend.module').then( m => m.AddFriendPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 
