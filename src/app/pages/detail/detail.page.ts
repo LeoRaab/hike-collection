@@ -3,11 +3,11 @@ import {ActivatedRoute} from '@angular/router';
 import {HikeService} from '../../core/services/hike.service';
 import Hike from '../../core/models/hike.model';
 import {LoggerService} from '../../core/services/logger.service';
-import {ModalController, Platform} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {MessageService} from '../../core/services/message.service';
 import {ShareModalPage} from '../modals/share-modal/share-modal.page';
-import {ShareService} from '../../core/services/share.service';
 import {LoadingSpinnerService} from '../../core/services/loading-spinner.service';
+import {AuthorService} from '../../core/services/author.service';
 
 @Component({
   selector: 'app-detail',
@@ -20,7 +20,7 @@ export class DetailPage implements OnInit {
   hike?: Hike;
 
   constructor(
-    public platform: Platform,
+    public authorService: AuthorService,
     private route: ActivatedRoute,
     private hikeService: HikeService,
     private loggerService: LoggerService,

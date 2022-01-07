@@ -11,7 +11,14 @@
 <ion-content fullscreen class="ion-padding-horizontal">
   <ng-container *ngIf="hike">
     <h1>{{ hike.title }}</h1>
-    <p>von {{ hike.author.name }}</p>
+    <p class="ion-text-right ion-text">
+      <ion-text *ngIf="hike.author.authorId !== authorService.getAuthor().authorId" color="tertiary">
+        by {{ hike.author.name }}
+      </ion-text>
+      <ion-text *ngIf="hike.author.authorId === authorService.getAuthor().authorId" color="tertiary">
+        by You
+      </ion-text>
+    </p>
     <p>{{ hike.shortDescription }}</p>
 
     <app-picture-collection [pictureCollection]="hike.pictureCollection"></app-picture-collection>

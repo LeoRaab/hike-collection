@@ -14,7 +14,7 @@
     </ion-card-header>
     <ion-card-content>
       {{ hike.shortDescription }}
-      <p>
+      <p class="ion-text-right ion-text">
         <ion-text *ngIf="hike.author.authorId !== authorService.getAuthor().authorId" color="tertiary">
           by {{ hike.author.name }}
         </ion-text>
