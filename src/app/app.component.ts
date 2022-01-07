@@ -12,18 +12,11 @@ import {LoadingSpinnerService} from './core/services/loading-spinner.service';
 export class AppComponent implements OnInit {
 
   constructor(public loadingSpinnerService: LoadingSpinnerService,
-              private configService: ConfigService,
-              private userService: UserService,
-              private menu: MenuController) {
+              private configService: ConfigService) {
   }
 
   ngOnInit() {
     this.toggleDarkTheme();
-  }
-
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
   }
 
   toggleDarkTheme() {
