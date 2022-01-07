@@ -9,13 +9,55 @@
 </ion-header>
 
 <ion-content fullscreen class="ion-padding-horizontal">
+  <ng-container *ngIf="hike">
+    <h1>{{ hike.title }}</h1>
+    <p>von {{ hike.author.name }}</p>
+    <p>{{ hike.shortDescription }}</p>
 
-  <app-hike-detail *ngIf="hike" [hike]="hike"></app-hike-detail>
+    <app-picture-collection [pictureCollection]="hike.pictureCollection"></app-picture-collection>
 
-  <ion-fab (click)="shareHike()" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="success">
-      <ion-icon name="share-social-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-list>
+      <ion-list-header>Location</ion-list-header>
+      <ion-item>
+        <ion-icon name="navigate-circle-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap">
+          <p>{{ hike.location.address | fullAddress }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="compass-outline" slot="start"></ion-icon>
+        <ion-label>
+          <p>{{ hike.location.coordinates | coordinates }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-list-header>Stats</ion-list-header>
+      <ion-item>
+        <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap">
+          <p>{{ hike.stats.duration | formatDuration }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="trending-down-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap">
+          <p>{{ hike.stats.lowestPoint }} m</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="trending-up-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap">
+          <p>{{ hike.stats.highestPoint }} m</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
+    <p class="long-description">{{ hike.longDescription }}</p>
+
+
+    <ion-fab (click)="shareHike()" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="success">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ng-container>
 </ion-content>
