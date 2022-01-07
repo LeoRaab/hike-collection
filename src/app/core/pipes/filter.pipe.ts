@@ -36,7 +36,7 @@ export class FilterPipe implements PipeTransform {
 
     if (hikeCollection.length !== filteredCollection.length) {
       this.loggerService.debug('Collection filtered!');
-      this.messageService.showToast('Collection filtered!', 'tertiary');
+      this.messageService.showToast('Collection filtered!', 'light');
       return filteredCollection;
     } else {
       return hikeCollection;
