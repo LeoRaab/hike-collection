@@ -1,6 +1,3 @@
-/**
- * TODO: Filter kapseln, verbessern
- */
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HikeService} from '../../core/services/hike.service';
 import {LoggerService} from '../../core/services/logger.service';
