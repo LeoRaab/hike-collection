@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { HikeDetailComponent } from './hike-detail.component';
+import { AuthorNameComponent } from './author-name.component';
 
-describe('HikeDetailComponent', () => {
-  let component: HikeDetailComponent;
-  let fixture: ComponentFixture<HikeDetailComponent>;
+describe('AuthorNameComponent', () => {
+  let component: AuthorNameComponent;
+  let fixture: ComponentFixture<AuthorNameComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HikeDetailComponent ],
+      declarations: [ AuthorNameComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HikeDetailComponent);
+    fixture = TestBed.createComponent(AuthorNameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
