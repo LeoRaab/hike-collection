@@ -14,31 +14,31 @@ export class HikeService {
   constructor(private hikeRepository: HikeRepository) {
   }
 
-  getHikeCollection(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
+  public getHikeCollection(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
     return this.hikeRepository.readAll(orderBy, orderByDirection);
   }
 
-  getHike(hikeId: string): Observable<Hike> {
+  public getHike(hikeId: string): Observable<Hike> {
     return this.hikeRepository.read(hikeId);
   }
 
-  addHike(hike: Hike, customHikeCollectionPath?: string) {
+  public addHike(hike: Hike, customHikeCollectionPath?: string) {
     this.hikeRepository.create(hike, customHikeCollectionPath);
   }
 
-  editHike(hike: Hike) {
+  public editHike(hike: Hike) {
     this.hikeRepository.update(hike);
   }
 
-  deleteHike(hikeId) {
+  public deleteHike(hikeId) {
     this.hikeRepository.delete(hikeId);
   }
 
-  updatePictureCollection(hikeId: string, pictureCollection: Picture[]) {
+  public updatePictureCollection(hikeId: string, pictureCollection: Picture[]) {
     this.hikeRepository.updatePictureCollection(hikeId, pictureCollection);
   }
 
-  generateHikeId(): string {
+  public generateHikeId(): string {
     return this.hikeRepository.createHikeId();
   }
 
