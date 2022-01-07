@@ -4,6 +4,7 @@ import {HikeService} from '../../core/services/hike.service';
 import Hike from '../../core/models/hike.model';
 import {MessageService} from '../../core/services/message.service';
 import {LoggerService} from '../../core/services/logger.service';
+import {AuthorService} from '../../core/services/author.service';
 
 @Component({
   selector: 'app-edit',
@@ -19,6 +20,7 @@ export class EditPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private hikeService: HikeService,
+    private authorService: AuthorService,
     private messageService: MessageService,
     private loggerService: LoggerService
   ) {
@@ -29,7 +31,12 @@ export class EditPage implements OnInit {
       this.hikeId = params.id;
       console.log(this.hikeId);
       this.hikeService.getHike(this.hikeId)
-        .subscribe(hike => this.hike = hike);
+        .subscribe(hike => {
+          if (hike.author.authorId !== this.authorService.getAuthor().authorId) {
+            this.router.navigate(['/']);
+          }
+          this.hike = hike;
+        });
     });
   }
 
