@@ -7,4 +7,5 @@ export class FilterSettings {
   duration = 0;
   orderBy = 'hikeId';
   orderMode: OrderByDirection = 'asc';
+  showShared = true;
 }

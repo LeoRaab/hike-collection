@@ -33,6 +33,10 @@
       <ion-range [(ngModel)]="filterSettings.duration" max="2880" step="60" snaps></ion-range>
     </ion-item>
     <ion-item>
+      <ion-label>Show shared hikes</ion-label>
+      <ion-checkbox [(ngModel)]="filterSettings.showShared" slot="end"></ion-checkbox>
+    </ion-item>
+    <ion-item>
       <ion-label>Order by</ion-label>
       <ion-select [(ngModel)]="filterSettings.orderBy">
         <ion-select-option value="hikeId">Hike</ion-select-option>
