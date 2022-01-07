@@ -12,31 +12,36 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>max. Lowest Point</ion-label>
-      <ion-label slot="end">{{ filterSettings.lowestPoint | formatMeter }}</ion-label>
+      <ion-icon name="trending-down-outline" slot="start"></ion-icon>
+      <ion-label>Lowest Point</ion-label>
+      <ion-label slot="end">&gt; {{ filterSettings.lowestPoint | formatMeter }}</ion-label>
     </ion-item>
     <ion-item>
       <ion-range [(ngModel)]="filterSettings.lowestPoint" max="4000" step="500" snaps></ion-range>
     </ion-item>
     <ion-item>
+      <ion-icon name="trending-up-outline" slot="start"></ion-icon>
       <ion-label>Highest Point</ion-label>
-      <ion-label slot="end">{{ filterSettings.highestPoint | formatMeter }}</ion-label>
+      <ion-label slot="end">&gt; {{ filterSettings.highestPoint | formatMeter }}</ion-label>
     </ion-item>
     <ion-item>
       <ion-range [(ngModel)]="filterSettings.highestPoint" max="4000" step="500" snaps></ion-range>
     </ion-item>
     <ion-item>
+      <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
       <ion-label>Duration</ion-label>
-      <ion-label slot="end">{{ filterSettings.duration | formatDuration }}</ion-label>
+      <ion-label slot="end">&gt; {{ filterSettings.duration | formatDuration }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-range [(ngModel)]="filterSettings.duration" max="2880" step="60" snaps></ion-range>
+      <ion-range [(ngModel)]="filterSettings.duration" max="600" step="60" snaps></ion-range>
     </ion-item>
     <ion-item>
+      <ion-icon name="share-social-outline" slot="start"></ion-icon>
       <ion-label>Show shared hikes</ion-label>
       <ion-checkbox [(ngModel)]="filterSettings.showShared" slot="end"></ion-checkbox>
     </ion-item>
     <ion-item>
+      <ion-icon name="git-compare-outline" slot="start"></ion-icon>
       <ion-label>Order by</ion-label>
       <ion-select [(ngModel)]="filterSettings.orderBy">
         <ion-select-option value="hikeId">Hike</ion-select-option>
@@ -46,7 +51,9 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Order by</ion-label>
+      <ion-icon *ngIf="filterSettings.orderMode === 'asc'" name="chevron-up-outline" slot="start"></ion-icon>
+      <ion-icon *ngIf="filterSettings.orderMode === 'desc'" name="chevron-down-outline" slot="start"></ion-icon>
+      <ion-label>Order direction</ion-label>
       <ion-select [(ngModel)]="filterSettings.orderMode">
         <ion-select-option value="asc">Ascending</ion-select-option>
         <ion-select-option value="desc">Descending</ion-select-option>
