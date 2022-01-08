@@ -32,13 +32,14 @@ export class RegisterPage {
   }
 
   public async register(): Promise<void> {
-    const isAuthorNameUsed = await this.isAuthorNameUsed();
-
-    if (isAuthorNameUsed) {
-      this.messageService.showToast('Name is already in use, choose another one!', 'warning');
-    } else {
-      this.registerUser();
-    }
+    this.authorService.getAuthorByName(this.author.name)
+      .subscribe(authors => {
+        if (authors.length > 0) {
+          this.messageService.showToast('Name is already in use, choose another one!', 'warning');
+        } else {
+          this.registerUser();
+        }
+      });
   }
 
   private registerUser(): void {
@@ -61,18 +62,4 @@ export class RegisterPage {
         this.messageService.showToast('Failed to register, please try again!', 'danger');
       });
   }
-
-  private isAuthorNameUsed(): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
-      this.authorService.getAuthorByName(this.author.name)
-        .subscribe((authors) => {
-          if (authors.length > 0) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        });
-    });
-  }
-
 }
