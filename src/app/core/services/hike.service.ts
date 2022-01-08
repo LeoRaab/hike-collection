@@ -5,6 +5,7 @@ import Picture from '../models/picture.model';
 import firebase from 'firebase/compat';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 import HikeRepository from '../repositories/hike-repository';
+import {take} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class HikeService {
   }
 
   public getHike(hikeId: string): Observable<Hike> {
-    return this.hikeRepository.read(hikeId);
+    return this.hikeRepository.read(hikeId).pipe(take(1));
   }
 
   public addHike(hike: Hike, customHikeCollectionPath?: string) {
