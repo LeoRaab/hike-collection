@@ -8,6 +8,7 @@ import {FilterSettings} from '../../core/models/filter-settings.model';
 import {UserService} from '../../core/services/user.service';
 import {ConfigService} from '../../core/services/config.service';
 import {LoadingSpinnerService} from '../../core/services/loading-spinner.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ export class HomePage implements OnInit, OnDestroy {
   searchTerm = '';
   distanceToTop = 0;
   hikeCollection?: Hike[];
+  hikeCollection$: Subscription;
   filterSettings = new FilterSettings();
 
   constructor(private hikeService: HikeService,
@@ -36,14 +38,11 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.hikeCollection = undefined;
-    this.filterSettings = new FilterSettings();
-    this.distanceToTop = 0;
-    this.searchTerm = '';
+    this.hikeCollection$.unsubscribe();
   }
 
   loadCollection(event?) {
-    this.hikeService.getHikeCollection(this.filterSettings.orderBy, this.filterSettings.orderMode)
+    this.hikeCollection$ = this.hikeService.getHikeCollection(this.filterSettings.orderBy, this.filterSettings.orderMode)
       .subscribe(hikeCollection => {
         this.hikeCollection = hikeCollection;
         if (event) {
