@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import Author from '../models/author.model';
 import AuthorRepository from '../repositories/author-repository';
 import {LoggerService} from './logger.service';
 import {ConfigService} from './config.service';
+import {take} from 'rxjs/operators';
 
 
 @Injectable({
@@ -26,7 +27,6 @@ export class AuthorService {
           this.author = author;
           if (this.author !== null && this.author !== undefined) {
             this.setAddFriendUrl();
-            console.log(this.getAddFriendUrl());
             resolve();
           } else {
             reject();
@@ -40,11 +40,11 @@ export class AuthorService {
   }
 
   public getAuthorById(id: string): Observable<Author> {
-    return this.authorRepository.read(id);
+    return this.authorRepository.read(id).pipe(take(1));
   }
 
   public getAuthorByName(name: string): Observable<Author[]> {
-    return this.authorRepository.readByName(name);
+    return this.authorRepository.readByName(name).pipe(take(1));
   }
 
   public getFriends(friendsList: string[]): Author[] {
@@ -69,18 +69,27 @@ export class AuthorService {
     this.authorRepository.update(this.author);
   }
 
-  public addFriendToPending(friendId: string): void {
-    console.log(this.author);
+  public addFriendToPending(friendId: string): Promise<void> {
     const isInPendingFriendsList = this.author.pendingFriendsList.find(pendingFriend => pendingFriend === friendId);
     const isInFriendsList = this.author.friendsList.find(friend => friend === friendId);
 
-    if (!isInPendingFriendsList && !isInFriendsList) {
-      this.author.pendingFriendsList.push(friendId);
-      this.authorRepository.update(this.author);
-      this.loggerService.debug('Friend with id ' + friendId + ' added to pending-friends-list!');
-    } else {
-      this.loggerService.info('Friend already in list - not added');
-    }
+    return new Promise<void>((resolve, reject) => {
+      if (!isInPendingFriendsList && !isInFriendsList && friendId !== this.author.authorId) {
+        try {
+          this.author.pendingFriendsList.push(friendId);
+          this.authorRepository.update(this.author);
+          this.loggerService.debug('Friend with id ' + friendId + ' added to pending-friends-list!');
+          resolve();
+        } catch (e) {
+          this.loggerService.error('Adding friend failed - Error ' +  JSON.stringify(e));
+          reject();
+        }
+      } else {
+        reject();
+        this.loggerService.info('Friend already in list - not added');
+      }
+    });
+
   }
 
   public removeFromFriendList(friendId: string): void {
