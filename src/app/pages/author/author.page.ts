@@ -11,7 +11,7 @@ import {MessageService} from '../../core/services/message.service';
   templateUrl: './author.page.html',
   styleUrls: ['./author.page.scss'],
 })
-export class AuthorPage implements OnInit, OnDestroy {
+export class AuthorPage implements OnInit {
   author?: Author;
   friends?: Author[];
   pendingFriends?: Author[];
@@ -30,15 +30,10 @@ export class AuthorPage implements OnInit, OnDestroy {
     this.addFriendUrl = this.authorService.getAddFriendUrl();
   }
 
-  ngOnDestroy() {
-    this.author = undefined;
-    this.friends = undefined;
-    this.pendingFriends = undefined;
-    this.addFriendUrl = undefined;
-  }
-
   public confirmFriendRequest(friendId: string): void {
     this.authorService.addToFriendsList(friendId);
+    this.friends = this.authorService.getFriends(this.author.friendsList);
+    this.pendingFriends = this.authorService.getFriends(this.author.pendingFriendsList);
     this.messageService.showToast('New friend added', 'light');
   }
 
