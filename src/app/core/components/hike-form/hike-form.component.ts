@@ -46,24 +46,50 @@ export class HikeFormComponent implements OnInit {
   };
 
   hikeForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    shortDescription: ['', Validators.required],
-    longDescription: ['', Validators.required],
+    title: ['', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(80)]],
+    shortDescription: ['', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(250)]],
+    longDescription: ['', [
+      Validators.required,
+      Validators.minLength(3)]],
     location: this.formBuilder.group({
       coordinates: this.formBuilder.group({
-        latitude: ['', Validators.required],
-        longitude: ['', Validators.required],
+        latitude: ['', [
+          Validators.required,
+          Validators.min(-90),
+          Validators.max(90)]],
+        longitude: ['', [
+          Validators.required,
+          Validators.min(-180),
+          Validators.max(180)]],
       }),
       address: this.formBuilder.group({
         street: ['', Validators.required],
-        zip: [0, Validators.required],
+        zip: [0, [
+          Validators.required,
+          Validators.min(1000),
+          Validators.max(9999)]],
         city: ['', Validators.required],
       })
     }),
     stats: this.formBuilder.group({
-      duration: [0, Validators.required],
-      lowestPoint: [0, Validators.required],
-      highestPoint: [0, Validators.required]
+      duration: [0, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(4320)]],
+      lowestPoint: [0, [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(8849)]],
+      highestPoint: [0,[
+        Validators.required,
+        Validators.min(0),
+        Validators.max(8849)]]
     })
   });
 
@@ -108,8 +134,7 @@ export class HikeFormComponent implements OnInit {
 
   public save() {
     this.updateHikeWithFormValues();
-    console.log(this.hike);
-    //this.saveHike.emit(this.hike);
+    this.saveHike.emit(this.hike);
   }
 
   public async showPictureListModal() {
