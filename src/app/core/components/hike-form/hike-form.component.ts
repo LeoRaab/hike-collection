@@ -10,7 +10,7 @@ import {PictureService} from '../../services/picture.service';
 import {AuthorService} from '../../services/author.service';
 import {LoadingSpinnerService} from '../../services/loading-spinner.service';
 import {MessageService} from '../../services/message.service';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-hike-form',
@@ -45,53 +45,7 @@ export class HikeFormComponent implements OnInit {
     pictureCollection: []
   };
 
-  hikeForm = this.formBuilder.group({
-    title: ['', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(80)]],
-    shortDescription: ['', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(250)]],
-    longDescription: ['', [
-      Validators.required,
-      Validators.minLength(3)]],
-    location: this.formBuilder.group({
-      coordinates: this.formBuilder.group({
-        latitude: ['', [
-          Validators.required,
-          Validators.min(-90),
-          Validators.max(90)]],
-        longitude: ['', [
-          Validators.required,
-          Validators.min(-180),
-          Validators.max(180)]],
-      }),
-      address: this.formBuilder.group({
-        street: ['', Validators.required],
-        zip: [0, [
-          Validators.required,
-          Validators.min(1000),
-          Validators.max(9999)]],
-        city: ['', Validators.required],
-      })
-    }),
-    stats: this.formBuilder.group({
-      duration: [0, [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(4320)]],
-      lowestPoint: [0, [
-        Validators.required,
-        Validators.min(0),
-        Validators.max(8849)]],
-      highestPoint: [0,[
-        Validators.required,
-        Validators.min(0),
-        Validators.max(8849)]]
-    })
-  });
+  hikeForm: FormGroup;
 
   cameraSource = CameraSource;
 
@@ -109,27 +63,7 @@ export class HikeFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hikeForm.setValue({
-      title: this.hike.title,
-      shortDescription: this.hike.shortDescription,
-      longDescription: this.hike.longDescription,
-      location: {
-        coordinates: {
-          latitude: this.hike.location.coordinates.latitude,
-          longitude: this.hike.location.coordinates.longitude,
-        },
-        address: {
-          street: this.hike.location.address.street,
-          zip: this.hike.location.address.zip,
-          city: this.hike.location.address.city,
-        }
-      },
-      stats: {
-        duration: this.hike.stats.duration,
-        lowestPoint: this.hike.stats.lowestPoint,
-        highestPoint: this.hike.stats.highestPoint
-      }
-    });
+    this.createHikeForm();
   }
 
   public save() {
@@ -165,13 +99,63 @@ export class HikeFormComponent implements OnInit {
           })
           .catch((e) => {
             this.loadingSpinnerService.hide();
-            this.loggerService.error('Uploading picture failed!');
+            this.loggerService.error('Uploading picture failed!' + JSON.stringify(e));
           });
       })
       .catch(() => {
         this.loadingSpinnerService.hide();
         this.loggerService.error('Getting picture failed!');
       });
+  }
+
+  private createHikeForm() {
+    this.hikeForm = this.formBuilder.group({
+      title: [this.hike.title, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(80)]],
+      shortDescription: [this.hike.shortDescription, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(250)]],
+      longDescription: [this.hike.longDescription, [
+        Validators.required,
+        Validators.minLength(3)]],
+      location: this.formBuilder.group({
+        coordinates: this.formBuilder.group({
+          latitude: [this.hike.location.coordinates.latitude, [
+            Validators.required,
+            Validators.min(-90),
+            Validators.max(90)]],
+          longitude: [this.hike.location.coordinates.longitude, [
+            Validators.required,
+            Validators.min(-180),
+            Validators.max(180)]],
+        }),
+        address: this.formBuilder.group({
+          street: [this.hike.location.address.street, Validators.required],
+          zip: [this.hike.location.address.zip, [
+            Validators.required,
+            Validators.min(1000),
+            Validators.max(9999)]],
+          city: [this.hike.location.address.city, Validators.required],
+        })
+      }),
+      stats: this.formBuilder.group({
+        duration: [this.hike.stats.duration, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(4320)]],
+        lowestPoint: [this.hike.stats.lowestPoint, [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(8849)]],
+        highestPoint: [this.hike.stats.highestPoint,[
+          Validators.required,
+          Validators.min(0),
+          Validators.max(8849)]]
+      })
+    });
   }
 
   private updateHikeWithFormValues() {
