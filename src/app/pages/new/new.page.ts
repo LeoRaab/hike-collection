@@ -19,7 +19,7 @@ export class NewPage {
     private hikeService: HikeService
   ) { }
 
-  async handleSaveRequest(hike: Hike) {
+  public async handleSaveRequest(hike: Hike): Promise<void> {
     this.loggerService.debug(JSON.stringify(hike));
 
     try {

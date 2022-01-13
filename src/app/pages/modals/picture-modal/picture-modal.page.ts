@@ -1,7 +1,3 @@
-/**
- * TODO: Pictures sollen nicht automatisch gespeichert werden
- */
-
 import {Component, Input, OnInit} from '@angular/core';
 import Picture from '../../../core/models/picture.model';
 import {ModalController} from '@ionic/angular';
@@ -30,7 +26,7 @@ export class PictureModalPage implements OnInit {
     this.tmpPictureCollection = this.pictureCollection;
   }
 
-  async deletePicture(pictureId) {
+  public async deletePicture(pictureId): Promise<void> {
     const confirmState = await this.messageService.showDialog(
       'Are you sure to delete this Picture?',
       'middle',
@@ -44,17 +40,14 @@ export class PictureModalPage implements OnInit {
     }
   }
 
-  savePictureCollection() {
-    /**
-     * TODO: Why are there two collections??
-     */
+  public savePictureCollection(): void {
     this.pictureCollection = this.tmpPictureCollection;
     this.modalController.dismiss( {
       tmpPictureCollection: this.tmpPictureCollection
     });
   }
 
-  dismissModal() {
+  public dismissModal(): void {
     this.modalController.dismiss();
   }
 

@@ -6,7 +6,7 @@ import LocationAddress from '../models/location-address.model';
 })
 export class FullAddressPipe implements PipeTransform {
 
-  transform(address: LocationAddress, ...args: unknown[]): unknown {
+  transform(address: LocationAddress): string {
     return `${ address.street }, ${ address.zip } ${ address.city }`;
   }
 

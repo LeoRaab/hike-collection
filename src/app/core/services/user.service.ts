@@ -5,7 +5,6 @@ import firebase from 'firebase/compat';
 import User = firebase.User;
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {ConfigService} from './config.service';
-import {AuthorService} from './author.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +17,10 @@ export class UserService {
   constructor(private fireStore: AngularFirestore,
               private auth: AngularFireAuth,
               private configService: ConfigService,
-              private loggerService: LoggerService,
-              private authorService: AuthorService) {
+              private loggerService: LoggerService) {
   }
 
-  public setUser(): Promise<User | null> {
+  public setUser(): Promise<User> {
     return new Promise<User | null>((resolve, reject) => {
       this.auth.user.subscribe((user) => {
         this.user = user;
@@ -30,13 +28,13 @@ export class UserService {
           this.isLoggedIn = true;
           resolve(this.user);
         } else {
-          reject(null);
+          reject();
         }
       });
     });
   }
 
-  public hasEmailVerified() {
+  public hasEmailVerified(): boolean {
     return this.user.emailVerified;
   }
 
@@ -48,7 +46,7 @@ export class UserService {
     return this.user.email;
   }
 
-  async loginUser(email: string, password: string) {
+  public async loginUser(email: string, password: string): Promise<void> {
     await this.auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         this.user = userCredential.user;
@@ -59,7 +57,7 @@ export class UserService {
       });
   }
 
-  async logoutUser() {
+  public async logoutUser(): Promise<void> {
     await this.auth.signOut()
       .then(() => {
         this.isLoggedIn = false;
@@ -70,7 +68,7 @@ export class UserService {
       });
   }
 
-  async registerUser(email: string, password: string): Promise<User> {
+  public async registerUser(email: string, password: string): Promise<User> {
     return new Promise<User>(async (resolve, reject) => {
       await this.auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {

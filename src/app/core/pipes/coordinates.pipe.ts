@@ -6,7 +6,7 @@ import LocationCoordinates from '../models/location-coordinates.model';
 })
 export class CoordinatesPipe implements PipeTransform {
 
-  transform(locationCoordinates: LocationCoordinates, ...args: unknown[]): unknown {
+  transform(locationCoordinates: LocationCoordinates): string {
     return `${ locationCoordinates.latitude }, ${ locationCoordinates.longitude }`;
   }
 

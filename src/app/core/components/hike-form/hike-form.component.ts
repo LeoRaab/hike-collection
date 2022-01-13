@@ -66,12 +66,12 @@ export class HikeFormComponent implements OnInit {
     this.createHikeForm();
   }
 
-  public save() {
+  public save(): void {
     this.updateHikeWithFormValues();
     this.saveHike.emit(this.hike);
   }
 
-  public async showPictureListModal() {
+  public async showPictureListModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: PictureModalPage,
       componentProps: {
@@ -108,7 +108,7 @@ export class HikeFormComponent implements OnInit {
       });
   }
 
-  private createHikeForm() {
+  private createHikeForm(): void {
     this.hikeForm = this.formBuilder.group({
       title: [this.hike.title, [
         Validators.required,
@@ -158,7 +158,7 @@ export class HikeFormComponent implements OnInit {
     });
   }
 
-  private updateHikeWithFormValues() {
+  private updateHikeWithFormValues(): void {
     this.hike.title = this.hikeForm.value.title;
     this.hike.shortDescription = this.hikeForm.value.shortDescription;
     this.hike.longDescription = this.hikeForm.value.longDescription;
@@ -180,7 +180,7 @@ export class HikeFormComponent implements OnInit {
     };
   }
 
-  private updatePictureCollection(storageUrl: string) {
+  private updatePictureCollection(storageUrl: string): void {
     const altText = storageUrl.split('/').pop();
 
     this.hike.pictureCollection.push({

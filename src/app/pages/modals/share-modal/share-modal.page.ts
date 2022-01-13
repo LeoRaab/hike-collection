@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {AuthorService} from '../../../core/services/author.service';
 import Author from '../../../core/models/author.model';
-import {FormBuilder, NgForm, FormArray} from '@angular/forms';
+import {FormBuilder, FormArray} from '@angular/forms';
 import {HikeService} from '../../../core/services/hike.service';
 import Hike from '../../../core/models/hike.model';
 
@@ -28,7 +28,7 @@ export class ShareModalPage implements OnInit {
               private formBuilder: FormBuilder) {
   }
 
-  get friendsSelection() {
+  get friendsSelection(): FormArray {
     return this.shareForm.get('friendsSelection') as FormArray;
   }
 
@@ -44,11 +44,11 @@ export class ShareModalPage implements OnInit {
     this.friends = this.authorService.getFriends(this.friendsList);
   }
 
-  public addFriendToSelect() {
+  public addFriendToSelect(): void {
     this.friendsSelection.push(this.formBuilder.control(false));
   }
 
-  public share() {
+  public share(): void {
     const selectedFriends = this.getSelectedFriends();
 
     for (const selectedFriend of selectedFriends) {
@@ -56,7 +56,7 @@ export class ShareModalPage implements OnInit {
     }
   }
 
-  public dismissModal() {
+  public dismissModal(): void {
     this.modalController.dismiss();
   }
 

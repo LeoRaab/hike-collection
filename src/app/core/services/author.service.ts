@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import Author from '../models/author.model';
 import AuthorRepository from '../repositories/author-repository';
 import {LoggerService} from './logger.service';
@@ -93,7 +93,6 @@ export class AuthorService {
   }
 
   public removeFromFriendList(friendId: string): void {
-    //Remove friend from friendsList
     this.author.friendsList = this.author.friendsList.filter(friend => friend !== friendId);
     this.authorRepository.update(this.author);
   }

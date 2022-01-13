@@ -1,20 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HikeService} from '../../core/services/hike.service';
 import Hike from '../../core/models/hike.model';
 import {MessageService} from '../../core/services/message.service';
 import {LoggerService} from '../../core/services/logger.service';
 import {AuthorService} from '../../core/services/author.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss'],
 })
-export class EditPage implements OnInit {
+export class EditPage implements OnInit, OnDestroy {
 
-  hikeId: string | undefined;
-  hike: Hike | undefined;
+  hikeId?: string;
+  hike?: Hike;
+  params$: Subscription;
 
   constructor(
     private router: Router,
@@ -27,7 +29,7 @@ export class EditPage implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.params$ = this.route.params.subscribe(params => {
       this.hikeId = params.id;
       console.log(this.hikeId);
       this.hikeService.getHike(this.hikeId)
@@ -40,7 +42,11 @@ export class EditPage implements OnInit {
     });
   }
 
-  async handleDeleteRequest() {
+  ngOnDestroy() {
+    this.params$.unsubscribe();
+  }
+
+  public async handleDeleteRequest(): Promise<void> {
     const confirmState = await this.messageService.showDialog(
       'Are you sure to delete this Hike?',
       'middle',
@@ -63,7 +69,7 @@ export class EditPage implements OnInit {
     }
   }
 
-  async handleSaveRequest(hike: Hike) {
+  public async handleSaveRequest(hike: Hike): Promise<void> {
     this.loggerService.debug(JSON.stringify(hike));
 
     try {

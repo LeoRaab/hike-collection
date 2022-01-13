@@ -18,39 +18,39 @@ export default class HikeRepository {
               private loggerService: LoggerService) {
   }
 
-  create(hike: Hike, hikeCollectionPath: string = this.configService.getHikeCollectionPath()): void {
+  public create(hike: Hike, hikeCollectionPath: string = this.configService.getHikeCollectionPath()): void {
     this.fireStore.doc<Hike>(hikeCollectionPath + hike.hikeId).set(hike)
       .then(() => this.loggerService.debug('Hike added!'))
       .catch(error => this.loggerService.error('Adding hike failed! ' + error));
   }
 
-  createHikeId(): string {
+  public createHikeId(): string {
     return this.fireStore.createId();
   }
 
-  read(hikeId: string): Observable<Hike> {
+  public read(hikeId: string): Observable<Hike> {
     return this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hikeId)
       .valueChanges({idField: 'hikeId'});
   }
 
-  readAll(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
+  public readAll(orderBy: string, orderByDirection: OrderByDirection): Observable<Hike[]> {
     return this.fireStore.collection<Hike>(this.configService.getHikeCollectionPath(),
         ref => ref.orderBy(orderBy, orderByDirection)).valueChanges({idField: 'hikeId'});
   }
 
-  update(hike: Hike): void {
+  public update(hike: Hike): void {
     this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hike.hikeId).update(hike)
       .then(() => this.loggerService.debug('Hike with id: ' + hike.hikeId + ' updated!'))
       .catch(error => this.loggerService.error('Updating hike with id: ' + hike.hikeId + ' failed! ' + error));
   }
 
-  delete(hikeId): Promise<any> {
+  public delete(hikeId): Promise<any> {
     return this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hikeId).delete()
       .then(() => this.loggerService.debug('Hike deleted!'))
       .catch(error => this.loggerService.error('Deleting Hike failed! ' + error));
   }
 
-  updatePictureCollection(hikeId: string, pictureCollection: Picture[]): void {
+  public updatePictureCollection(hikeId: string, pictureCollection: Picture[]): void {
     const hikeRef = this.fireStore.doc<Hike>(this.configService.getHikeCollectionPath() + hikeId);
     hikeRef.update({pictureCollection})
       .then(() => this.loggerService.debug('Picture uploaded!'))

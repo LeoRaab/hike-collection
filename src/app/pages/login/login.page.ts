@@ -17,7 +17,7 @@ export class LoginPage {
               private userService: UserService) {
   }
 
-  async login() {
+  public async login(): Promise<void> {
     await this.userService.loginUser(this.email, this.password)
       .then(async () => {
         await this.appInitService.init();

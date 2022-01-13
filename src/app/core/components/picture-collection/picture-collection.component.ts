@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import Picture from '../../models/picture.model';
 import SwiperCore, {Navigation, Pagination, Scrollbar, A11y, SwiperOptions} from 'swiper';
 
@@ -9,7 +9,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
   templateUrl: './picture-collection.component.html',
   styleUrls: ['./picture-collection.component.scss'],
 })
-export class PictureCollectionComponent implements OnInit {
+export class PictureCollectionComponent {
   @Input() pictureCollection: Picture[];
 
   config: SwiperOptions = {
@@ -27,7 +27,5 @@ export class PictureCollectionComponent implements OnInit {
   };
 
   constructor() { }
-
-  ngOnInit() {}
 
 }

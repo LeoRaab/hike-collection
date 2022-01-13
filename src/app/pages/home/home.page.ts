@@ -41,7 +41,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.hikeCollection$.unsubscribe();
   }
 
-  loadCollection(event?) {
+  public loadCollection(event?): void {
     this.hikeCollection$ = this.hikeService.getHikeCollection(this.filterSettings.orderBy, this.filterSettings.orderMode)
       .subscribe(hikeCollection => {
         this.hikeCollection = hikeCollection;
@@ -52,7 +52,7 @@ export class HomePage implements OnInit, OnDestroy {
       });
   }
 
-  async showFilterModal() {
+  public async showFilterModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: FilterModalPage,
       componentProps: {
@@ -70,11 +70,11 @@ export class HomePage implements OnInit, OnDestroy {
     this.loadCollection();
   }
 
-  ionViewWillEnter() {
+  public ionViewWillEnter(): void {
     this.setDistanceToTop();
   }
 
-  setDistanceToTop() {
+  public setDistanceToTop(): void {
     this.ionContent.getScrollElement().then(scrollElement => {
       this.distanceToTop = scrollElement.scrollTop;
     });

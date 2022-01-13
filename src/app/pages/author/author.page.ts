@@ -61,14 +61,14 @@ export class AuthorPage implements OnInit {
     }
   }
 
-  public async copyFriendLinkUrl() {
+  public async copyFriendLinkUrl(): Promise<void> {
     await Clipboard.write({
       url: this.addFriendUrl
     });
     this.messageService.showToast('Url copied!', 'light');
   }
 
-  public logout() {
+  public logout(): void {
     this.userService.logoutUser()
       .then(() => {
         this.router.navigate(['/']);

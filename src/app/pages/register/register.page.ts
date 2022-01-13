@@ -91,7 +91,7 @@ export class RegisterPage {
       });
   }
 
-  private updateAuthorWithFormValues() {
+  private updateAuthorWithFormValues(): void {
     this.author.name = this.registerForm.value.name;
     this.author.email = this.registerForm.value.email;
   }

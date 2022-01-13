@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from './core/services/user.service';
-import {MenuController} from '@ionic/angular';
 import {ConfigService} from './core/services/config.service';
 import {LoadingSpinnerService} from './core/services/loading-spinner.service';
 
@@ -19,7 +17,7 @@ export class AppComponent implements OnInit {
     this.toggleDarkTheme();
   }
 
-  toggleDarkTheme() {
+  private toggleDarkTheme(): void {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
     if (prefersDark.matches && this.configService.isDarkModeEnabled()) {

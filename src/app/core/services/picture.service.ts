@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
-import {MessageService} from './message.service';
-import {LoggerService} from './logger.service';
 import {Camera, CameraResultType, CameraSource, Photo} from '@capacitor/camera';
 
 @Injectable({
@@ -44,7 +42,7 @@ export class PictureService {
     });
   }
 
-  public deletePictureFromStorage(storageUrl: string) {
+  public deletePictureFromStorage(storageUrl: string): void {
     this.fireStorage.ref(storageUrl).delete().subscribe();
   }
 

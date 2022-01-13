@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {MenuController} from '@ionic/angular';
 
 @Component({
@@ -6,10 +6,8 @@ import {MenuController} from '@ionic/angular';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
 
   constructor(public menu: MenuController) { }
-
-  ngOnInit() {}
 
 }

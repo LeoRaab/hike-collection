@@ -5,14 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatMeterPipe implements PipeTransform {
 
-  transform(meter: number, ...args: unknown[]): unknown {
-    let meterString = meter.toString() + ' m';
+  transform(meter: number): string {
+    let formattedMeter = meter.toString() + ' m';
 
     if (meter > 999) {
-      meterString = meterString.slice(0, 1) + '.' + meterString.slice(1);
+      formattedMeter = formattedMeter.slice(0, 1) + '.' + formattedMeter.slice(1);
     }
 
-    return meterString;
+    return formattedMeter;
   }
 
 }

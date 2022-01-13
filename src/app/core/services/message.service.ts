@@ -14,7 +14,7 @@ export class MessageService {
   ) {
   }
 
-  async showToast(message: string, color: string) {
+  public async showToast(message: string, color: string): Promise<void> {
     const toast = await this.toastController.create({
       message,
       color,
@@ -24,7 +24,7 @@ export class MessageService {
     toast.present();
   }
 
-  async showDialog(message: string, position: 'bottom' | 'middle' | 'top', color: string) {
+  public async showDialog(message: string, position: 'bottom' | 'middle' | 'top', color: string): Promise<string> {
     const toast = await this.toastController.create({
       message,
       position,
@@ -55,15 +55,14 @@ export class MessageService {
     return role;
   }
 
-  async showActionSheet(title: string,
-                        buttons: { text: string; icon: string; role: string }[]) {
+  public async showActionSheet(title: string, buttons: { text: string; icon: string; role: string }[]): Promise<string> {
     const actionSheet = await this.actionSheetController.create({
       header: title,
       buttons
     });
     await actionSheet.present();
 
-    const { role } = await actionSheet.onDidDismiss();
+    const {role} = await actionSheet.onDidDismiss();
     return role;
   }
 

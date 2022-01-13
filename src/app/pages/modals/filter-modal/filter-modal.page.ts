@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {FilterSettings} from '../../../core/models/filter-settings.model';
 
@@ -14,23 +14,21 @@ export class FilterModalPage {
   constructor(private modalController: ModalController) {
   }
 
-  saveFilterSettings() {
+  public saveFilterSettings(): void {
     this.dismissModal(this.filterSettings);
   }
 
-  clearFilterSettings() {
+  public clearFilterSettings(): void {
     this.dismissModal(new FilterSettings());
   }
 
-  dismissModal(filterSettings?: FilterSettings) {
+  public dismissModal(filterSettings?: FilterSettings): void {
     if (filterSettings) {
       this.modalController.dismiss({
         filterSettings
       });
     } else {
-      this.modalController.dismiss({
-        filterSettings: false
-      });
+      this.modalController.dismiss();
     }
   }
 }
