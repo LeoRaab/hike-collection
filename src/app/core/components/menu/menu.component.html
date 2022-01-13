@@ -2,6 +2,11 @@
   <ion-header>
     <ion-toolbar color="success">
       <ion-title>Menu</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="menu.close()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content>
