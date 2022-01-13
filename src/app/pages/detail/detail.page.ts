@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HikeService} from '../../core/services/hike.service';
 import Hike from '../../core/models/hike.model';
@@ -8,16 +8,18 @@ import {MessageService} from '../../core/services/message.service';
 import {ShareModalPage} from '../modals/share-modal/share-modal.page';
 import {LoadingSpinnerService} from '../../core/services/loading-spinner.service';
 import {AuthorService} from '../../core/services/author.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
 })
-export class DetailPage implements OnInit {
+export class DetailPage implements OnInit, OnDestroy {
 
   hikeId?: string;
   hike?: Hike;
+  params$: Subscription;
 
   constructor(
     public authorService: AuthorService,
@@ -33,7 +35,7 @@ export class DetailPage implements OnInit {
   ngOnInit(): void {
     this.loadingSpinnerService.show();
 
-    this.route.params.subscribe(params => {
+    this.params$ = this.route.params.subscribe(params => {
       this.hikeId = params.id;
       this.hikeService.getHike(this.hikeId)
         .subscribe(hike => {
@@ -43,7 +45,11 @@ export class DetailPage implements OnInit {
     });
   }
 
-  async shareHike() {
+  ngOnDestroy() {
+    this.params$.unsubscribe();
+  }
+
+  public async shareHike(): Promise<void> {
 
     const buttons = [
       {
