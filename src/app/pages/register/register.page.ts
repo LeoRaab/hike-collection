@@ -52,6 +52,8 @@ export class RegisterPage {
               private loggerService: LoggerService) {
   }
 
+  get password() { return this.registerForm.get('password'); }
+
   public async register(): Promise<void> {
     this.authorService.getAuthorByName(this.author.name)
       .subscribe(authors => {
