@@ -19,10 +19,19 @@
         <ion-label position="stacked">Password</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
+      <ion-item *ngIf="password.touched && password.invalid">
+        <ion-label>
+          <p class="ion-text-wrap">
+            Password requires at least one upper case letter, one lower case letter, one digit and one special
+            character and a minimum length of 10
+          </p>
+        </ion-label>
+      </ion-item>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-button type="submit" expand="block" color="success" [disabled]="!registerForm.valid">Register</ion-button>
+            <ion-button type="submit" expand="block" color="success" [disabled]="!registerForm.valid">Register
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
