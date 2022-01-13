@@ -17,8 +17,6 @@ export class ConfigService {
       this.remoteConfig.strings.subscribe((config) => {
         this.config = config;
         if (this.config !== null && this.config !== undefined) {
-          //this is only for local dev
-          //this.config.hostUrl = 'https://localhost:4200';
           resolve();
         } else {
           reject();
