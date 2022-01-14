@@ -2,7 +2,8 @@
   <ion-toolbar>
     <ion-back-button text="" slot="start" color="success"></ion-back-button>
     <ion-title>Details</ion-title>
-    <ion-button *ngIf="hike && hike.author.authorId === authorService.getAuthor().authorId" [routerLink]="['/edit/' + hikeId]"
+    <ion-button *ngIf="hike && hike.author.authorId === authorService.getAuthor().authorId"
+                [routerLink]="['/edit/' + hikeId]"
                 slot="end" fill="clear" color="success">
       <ion-icon name="pencil-outline"></ion-icon>
     </ion-button>
@@ -64,11 +65,12 @@
 
     <p class="long-description">{{ hike.longDescription }}</p>
 
-
-    <ion-fab (click)="shareHike()" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="success">
-        <ion-icon name="share-social-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+    <ng-container *ngIf="hike.author.authorId === authorService.getAuthor().authorId">
+      <ion-fab (click)="shareHike()" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="success">
+          <ion-icon name="share-social-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ng-container>
   </ng-container>
 </ion-content>
