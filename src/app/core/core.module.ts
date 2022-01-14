@@ -6,7 +6,6 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {FullAddressPipe} from './pipes/full-address.pipe';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {PictureCollectionComponent} from './components/picture-collection/picture-collection.component';
 import {SwiperModule} from 'swiper/angular';
@@ -21,7 +20,6 @@ import { FormatAddressPipe } from './pipes/format-address.pipe';
   declarations: [
     HikeCollectionComponent,
     HikeFormComponent,
-    FullAddressPipe,
     PictureCollectionComponent,
     FormatMeterPipe,
     FormatDurationPipe,
@@ -42,7 +40,6 @@ import { FormatAddressPipe } from './pipes/format-address.pipe';
   exports: [
     HikeFormComponent,
     HikeCollectionComponent,
-    FullAddressPipe,
     PictureCollectionComponent,
     FormatAddressPipe,
     FormatDurationPipe,
