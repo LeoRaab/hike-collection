@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {HikeService} from '../../core/services/hike.service';
 import {LoggerService} from '../../core/services/logger.service';
 import {IonContent, ModalController} from '@ionic/angular';
@@ -15,7 +15,7 @@ import {Subscription} from 'rxjs';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage {
   @ViewChild('ionContent') ionContent: IonContent;
 
   searchTerm = '';
@@ -32,13 +32,13 @@ export class HomePage implements OnInit, OnDestroy {
               private modalController: ModalController) {
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.setDistanceToTop();
     this.loadingSpinnerService.show();
     this.loadCollection();
   }
 
-  ngOnDestroy() {
-    this.hikeCollection = undefined;
+  ionViewWillLeave() {
     this.hikeCollection$.unsubscribe();
   }
 
@@ -70,10 +70,6 @@ export class HomePage implements OnInit, OnDestroy {
       }));
 
     this.loadCollection();
-  }
-
-  public ionViewWillEnter(): void {
-    this.setDistanceToTop();
   }
 
   public setDistanceToTop(): void {
