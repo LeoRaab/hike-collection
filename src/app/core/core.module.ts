@@ -7,7 +7,6 @@ import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FullAddressPipe} from './pipes/full-address.pipe';
-import {CoordinatesPipe} from './pipes/coordinates.pipe';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {PictureCollectionComponent} from './components/picture-collection/picture-collection.component';
 import {SwiperModule} from 'swiper/angular';
@@ -16,19 +15,20 @@ import {FormatDurationPipe} from './pipes/format-duration.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
 import {SearchPipe} from './pipes/search.pipe';
 import { FormatCoordinatesPipe } from './pipes/format-coordinates.pipe';
+import { FormatAddressPipe } from './pipes/format-address.pipe';
 
 @NgModule({
   declarations: [
     HikeCollectionComponent,
     HikeFormComponent,
     FullAddressPipe,
-    CoordinatesPipe,
     PictureCollectionComponent,
     FormatMeterPipe,
     FormatDurationPipe,
     FilterPipe,
     SearchPipe,
-    FormatCoordinatesPipe
+    FormatCoordinatesPipe,
+    FormatAddressPipe
   ],
   imports: [
     CommonModule,
@@ -43,10 +43,10 @@ import { FormatCoordinatesPipe } from './pipes/format-coordinates.pipe';
     HikeFormComponent,
     HikeCollectionComponent,
     FullAddressPipe,
-    CoordinatesPipe,
     PictureCollectionComponent,
-    FormatMeterPipe,
+    FormatAddressPipe,
     FormatDurationPipe,
+    FormatMeterPipe,
     FormatCoordinatesPipe,
     FilterPipe,
     SearchPipe
