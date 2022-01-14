@@ -47,6 +47,7 @@ import { FormatCoordinatesPipe } from './pipes/format-coordinates.pipe';
     PictureCollectionComponent,
     FormatMeterPipe,
     FormatDurationPipe,
+    FormatCoordinatesPipe,
     FilterPipe,
     SearchPipe
   ],
