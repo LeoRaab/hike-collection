@@ -5,6 +5,7 @@ import Author from '../../../core/models/author.model';
 import {FormBuilder, FormArray} from '@angular/forms';
 import {HikeService} from '../../../core/services/hike.service';
 import Hike from '../../../core/models/hike.model';
+import {MessageService} from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-share-modal',
@@ -25,6 +26,7 @@ export class ShareModalPage implements OnInit {
   constructor(private modalController: ModalController,
               private authorService: AuthorService,
               private hikeService: HikeService,
+              private messageService: MessageService,
               private formBuilder: FormBuilder) {
   }
 
@@ -54,6 +56,9 @@ export class ShareModalPage implements OnInit {
     for (const selectedFriend of selectedFriends) {
       this.hikeService.addHike(this.hike, 'hikes/author_' + selectedFriend + '/hikeCollection/');
     }
+
+    this.messageService.showToast('Hike shared successful!', 'success');
+    this.dismissModal();
   }
 
   public dismissModal(): void {
