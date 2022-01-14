@@ -38,6 +38,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.hikeCollection = undefined;
     this.hikeCollection$.unsubscribe();
   }
 
@@ -61,11 +62,12 @@ export class HomePage implements OnInit, OnDestroy {
     });
 
     await modal.present();
-    const {data} = await modal.onWillDismiss();
-
-    if (data.filterSettings !== false && data.filterSettings !== undefined) {
-      this.filterSettings = data.filterSettings;
-    }
+    await modal.onWillDismiss()
+      .then((value => {
+        if (value.data.filterSettings) {
+          this.filterSettings = value.data.filterSettings;
+        }
+      }));
 
     this.loadCollection();
   }

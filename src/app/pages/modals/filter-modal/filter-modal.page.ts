@@ -28,7 +28,7 @@ export class FilterModalPage {
         filterSettings
       });
     } else {
-      this.modalController.dismiss();
+      this.modalController.dismiss({data: null});
     }
   }
 }
