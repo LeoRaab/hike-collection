@@ -12,6 +12,8 @@ export class LoginPage {
   email: string;
   password: string;
 
+  hasLoginFailed = false;
+
   constructor(private router: Router,
               private appInitService: AppInitService,
               private userService: UserService) {
@@ -22,7 +24,8 @@ export class LoginPage {
       .then(async () => {
         await this.appInitService.init();
         this.router.navigate(['/']);
-      });
+      })
+      .catch(() => this.hasLoginFailed = true);
   }
 
 }

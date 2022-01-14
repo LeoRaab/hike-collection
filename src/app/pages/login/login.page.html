@@ -15,6 +15,11 @@
   </ion-grid>
 
   <form (ngSubmit)="login()" #form="ngForm">
+    <ng-container *ngIf="hasLoginFailed">
+      <ion-item>
+        <ion-label color="danger">Login failed! Email and/or password is wrong!</ion-label>
+      </ion-item>
+    </ng-container>
     <ion-card>
       <ion-item>
         <ion-label position="stacked">Email</ion-label>

@@ -21,7 +21,7 @@ export class UserService {
   }
 
   public setUser(): Promise<User> {
-    return new Promise<User | null>((resolve, reject) => {
+    return new Promise<User>((resolve, reject) => {
       this.auth.user.subscribe((user) => {
         this.user = user;
         if (this.user !== null && this.user !== undefined) {
@@ -46,15 +46,19 @@ export class UserService {
     return this.user.email;
   }
 
-  public async loginUser(email: string, password: string): Promise<void> {
-    await this.auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        this.user = userCredential.user;
-        this.loggerService.debug('User signed in');
-      })
-      .catch((error) => {
-        this.loggerService.error('Login failed: ' + error);
-      });
+  public loginUser(email: string, password: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      await this.auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          this.user = userCredential.user;
+          this.loggerService.debug('User signed in');
+          resolve();
+        })
+        .catch((error) => {
+          this.loggerService.error('Login failed: ' + error);
+          reject();
+        });
+    });
   }
 
   public async logoutUser(): Promise<void> {

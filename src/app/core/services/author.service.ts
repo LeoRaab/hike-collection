@@ -23,6 +23,7 @@ export class AuthorService {
   public setAuthor(userId: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.authorRepository.read(userId)
+        .pipe(take(1))
         .subscribe((author) => {
           this.author = author;
           if (this.author !== null && this.author !== undefined) {
