@@ -25,15 +25,3 @@ Die App ist für die Mobile Ansicht optimiert.
 - Engage
   
   - Remote Config
-
-### Live Betrieb
-
-Die Hike-Collection ist erreichbar unter: [Hike-Collection](https://hikes.ponyhof.dev)
-
-Test-User:
-
-- Email: tom@ponyhof.dev | Password: !TomTurbo123
-
-- Email: fritz@ponyhof.dev | Password: !FritzFantom123
-
-Es können natürlich gerne eigene Benutzer angelegt werden ;)
